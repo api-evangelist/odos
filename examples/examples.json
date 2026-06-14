@@ -1,0 +1,167 @@
+{
+  "schema_examples": [
+    {
+      "schema": "AssemblePathRequest",
+      "description": "Assemble Path Request Schema",
+      "example": {
+        "pathId": "95bb963d193cd229a0b4087f34382ea2",
+        "simulate": false,
+        "userAddr": "0x47E2D28169738039755586743E2dfCF3bd643f86"
+      }
+    },
+    {
+      "schema": "PathRequestV2",
+      "description": "Public facing path request v2 schema",
+      "example": {
+        "chainId": 1,
+        "compact": true,
+        "gasPrice": 20,
+        "inputTokens": [
+          {
+            "amount": "189000000",
+            "tokenAddress": "0x2260FAC5E5542a773Aa44fBCfeDf7C193bc2C599"
+          }
+        ],
+        "outputTokens": [
+          {
+            "proportion": 1,
+            "tokenAddress": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2"
+          }
+        ],
+        "referralCode": 0,
+        "slippageLimitPercent": 0.3,
+        "sourceBlacklist": [],
+        "sourceWhitelist": [],
+        "userAddr": "0x47E2D28169738039755586743E2dfCF3bd643f86"
+      }
+    },
+    {
+      "schema": "PathRequestV3",
+      "description": "Public facing path request v3 schema",
+      "example": {
+        "chainId": 1,
+        "compact": true,
+        "gasPrice": 20,
+        "inputTokens": [
+          {
+            "amount": "189000000",
+            "tokenAddress": "0x2260FAC5E5542a773Aa44fBCfeDf7C193bc2C599"
+          }
+        ],
+        "outputTokens": [
+          {
+            "proportion": 1,
+            "tokenAddress": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2"
+          }
+        ],
+        "referralCode": 0,
+        "slippageLimitPercent": 0.3,
+        "sourceBlacklist": [],
+        "sourceWhitelist": [],
+        "userAddr": "0x47E2D28169738039755586743E2dfCF3bd643f86"
+      }
+    },
+    {
+      "schema": "SwapRequestV3",
+      "description": "",
+      "example": {
+        "chainId": 1,
+        "compact": true,
+        "gasPrice": 20,
+        "inputTokens": [
+          {
+            "amount": "189000000",
+            "tokenAddress": "0x2260FAC5E5542a773Aa44fBCfeDf7C193bc2C599"
+          }
+        ],
+        "outputTokens": [
+          {
+            "proportion": 1,
+            "tokenAddress": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2"
+          }
+        ],
+        "referralCode": 0,
+        "slippageLimitPercent": 0.3,
+        "sourceBlacklist": [],
+        "sourceWhitelist": [],
+        "userAddr": "0x47E2D28169738039755586743E2dfCF3bd643f86"
+      }
+    }
+  ],
+  "operation_examples": [
+    {
+      "title": "Generate Odos Quote V3",
+      "path": "/sor/quote/v3",
+      "method": "POST",
+      "request_example": {
+        "chainId": 1,
+        "compact": true,
+        "gasPrice": 20,
+        "inputTokens": [
+          {
+            "amount": "189000000",
+            "tokenAddress": "0x2260FAC5E5542a773Aa44fBCfeDf7C193bc2C599"
+          }
+        ],
+        "outputTokens": [
+          {
+            "proportion": 1,
+            "tokenAddress": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2"
+          }
+        ],
+        "referralCode": 0,
+        "slippageLimitPercent": 0.3,
+        "sourceBlacklist": [],
+        "sourceWhitelist": [],
+        "userAddr": "0x47E2D28169738039755586743E2dfCF3bd643f86"
+      }
+    },
+    {
+      "title": "Generate Odos Swap V3 (Quote + Assemble)",
+      "path": "/sor/swap/v3",
+      "method": "POST",
+      "request_example": {
+        "chainId": 1,
+        "compact": true,
+        "gasPrice": 20,
+        "inputTokens": [
+          {
+            "amount": "189000000",
+            "tokenAddress": "0x2260FAC5E5542a773Aa44fBCfeDf7C193bc2C599"
+          }
+        ],
+        "outputTokens": [
+          {
+            "proportion": 1,
+            "tokenAddress": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2"
+          }
+        ],
+        "referralCode": 0,
+        "slippageLimitPercent": 0.3,
+        "sourceBlacklist": [],
+        "sourceWhitelist": [],
+        "userAddr": "0x47E2D28169738039755586743E2dfCF3bd643f86"
+      }
+    },
+    {
+      "title": "Assemble Odos Quote into Transaction",
+      "path": "/sor/assemble",
+      "method": "POST",
+      "request_example": {
+        "pathId": "95bb963d193cd229a0b4087f34382ea2",
+        "simulate": false,
+        "userAddr": "0x47E2D28169738039755586743E2dfCF3bd643f86"
+      }
+    },
+    {
+      "title": "Get Single Token Price",
+      "path": "/pricing/token/{chain_id}/{token_addr}",
+      "method": "GET"
+    },
+    {
+      "title": "Get Supported Chains",
+      "path": "/info/chains",
+      "method": "GET"
+    }
+  ]
+}

@@ -1,0 +1,190 @@
+{
+  "@context": {
+    "@version": 1.1,
+    "schema": "https://schema.org/",
+    "odos": "https://docs.odos.xyz/vocab#",
+    "api": "https://api.odos.xyz/",
+    "name": "schema:name",
+    "description": "schema:description",
+    "url": "schema:url",
+    "version": "schema:version",
+    "chainId": {
+      "@id": "odos:chainId",
+      "@type": "schema:Integer"
+    },
+    "tokenAddress": {
+      "@id": "odos:tokenAddress",
+      "@type": "@id"
+    },
+    "amount": {
+      "@id": "odos:amount",
+      "@type": "schema:Text"
+    },
+    "proportion": {
+      "@id": "odos:proportion",
+      "@type": "schema:Number"
+    },
+    "pathId": {
+      "@id": "odos:pathId",
+      "@type": "schema:Text"
+    },
+    "slippageLimitPercent": {
+      "@id": "odos:slippageLimitPercent",
+      "@type": "schema:Number"
+    },
+    "gasEstimate": {
+      "@id": "odos:gasEstimate",
+      "@type": "schema:Integer"
+    },
+    "gasEstimateValue": {
+      "@id": "odos:gasEstimateValue",
+      "@type": "schema:Number"
+    },
+    "netOutValue": {
+      "@id": "odos:netOutValue",
+      "@type": "schema:Number"
+    },
+    "priceImpact": {
+      "@id": "odos:priceImpact",
+      "@type": "schema:Number"
+    },
+    "percentDiff": {
+      "@id": "odos:percentDiff",
+      "@type": "schema:Number"
+    },
+    "referralCode": {
+      "@id": "odos:referralCode",
+      "@type": "schema:Integer"
+    },
+    "userAddr": {
+      "@id": "odos:userAddr",
+      "@type": "@id"
+    },
+    "routerAddress": {
+      "@id": "odos:routerAddress",
+      "@type": "@id"
+    },
+    "executorAddress": {
+      "@id": "odos:executorAddress",
+      "@type": "@id"
+    },
+    "blockNumber": {
+      "@id": "odos:blockNumber",
+      "@type": "schema:Integer"
+    },
+    "gweiPerGas": {
+      "@id": "odos:gweiPerGas",
+      "@type": "schema:Number"
+    },
+    "inTokens": {
+      "@id": "odos:inTokens",
+      "@type": "@id",
+      "@container": "@list"
+    },
+    "outTokens": {
+      "@id": "odos:outTokens",
+      "@type": "@id",
+      "@container": "@list"
+    },
+    "inputTokens": {
+      "@id": "odos:inputTokens",
+      "@container": "@list"
+    },
+    "outputTokens": {
+      "@id": "odos:outputTokens",
+      "@container": "@list"
+    },
+    "sourceBlacklist": {
+      "@id": "odos:sourceBlacklist",
+      "@container": "@list"
+    },
+    "sourceWhitelist": {
+      "@id": "odos:sourceWhitelist",
+      "@container": "@list"
+    },
+    "sources": {
+      "@id": "odos:sources",
+      "@container": "@list"
+    },
+    "tokenPrices": {
+      "@id": "odos:tokenPrices"
+    },
+    "currencyId": {
+      "@id": "odos:currencyId"
+    },
+    "price": {
+      "@id": "odos:price",
+      "@type": "schema:Number"
+    },
+    "symbol": {
+      "@id": "odos:symbol",
+      "@type": "schema:Text"
+    },
+    "decimals": {
+      "@id": "odos:decimals",
+      "@type": "schema:Integer"
+    },
+    "compact": {
+      "@id": "odos:compact",
+      "@type": "schema:Boolean"
+    },
+    "disableRFQs": {
+      "@id": "odos:disableRFQs",
+      "@type": "schema:Boolean"
+    },
+    "permit2": {
+      "@id": "odos:permit2",
+      "@type": "schema:Boolean"
+    },
+    "likeAsset": {
+      "@id": "odos:likeAsset",
+      "@type": "schema:Boolean"
+    },
+    "simulate": {
+      "@id": "odos:simulate",
+      "@type": "schema:Boolean"
+    },
+    "transaction": {
+      "@id": "odos:transaction"
+    },
+    "simulation": {
+      "@id": "odos:simulation"
+    },
+    "isSuccess": {
+      "@id": "odos:isSuccess",
+      "@type": "schema:Boolean"
+    },
+    "pathVizImage": {
+      "@id": "odos:pathVizImage",
+      "@type": "schema:Text"
+    },
+    "OdosAPI": {
+      "@id": "odos:OdosAPI"
+    },
+    "SwapQuote": {
+      "@id": "odos:SwapQuote"
+    },
+    "SwapTransaction": {
+      "@id": "odos:SwapTransaction"
+    },
+    "TokenPrice": {
+      "@id": "odos:TokenPrice"
+    },
+    "LiquiditySource": {
+      "@id": "odos:LiquiditySource"
+    },
+    "ChainInfo": {
+      "@id": "odos:ChainInfo"
+    }
+  },
+  "@graph": [
+    {
+      "@type": "OdosAPI",
+      "@id": "https://api.odos.xyz",
+      "name": "Odos API",
+      "version": "3.0.0",
+      "description": "DEX aggregator REST API for optimal token swaps across 15 EVM chains",
+      "url": "https://docs.odos.xyz/"
+    }
+  ]
+}

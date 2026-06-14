@@ -1,0 +1,275 @@
+{
+  "api_terms": {
+    "Supported Blockchains": {
+      "type": "operation",
+      "path": "/info/chains",
+      "method": "GET",
+      "tags": [
+        "Information"
+      ],
+      "operationId": "get_chain_ids_info_chains_get"
+    },
+    "Odos contract info": {
+      "type": "operation",
+      "path": "/info/contract-info/{version}/{chain_id}",
+      "method": "GET",
+      "tags": [
+        "Information"
+      ],
+      "operationId": "get_contract_info_info_contract_info__version___chain_id__get"
+    },
+    "Address of the Odos router for given chain and version": {
+      "type": "operation",
+      "path": "/info/router/{version}/{chain_id}",
+      "method": "GET",
+      "tags": [
+        "Information"
+      ],
+      "operationId": "get_router_info_router__version___chain_id__get"
+    },
+    "Address of the Odos executor for given chain and version": {
+      "type": "operation",
+      "path": "/info/executor/{version}/{chain_id}",
+      "method": "GET",
+      "tags": [
+        "Information"
+      ],
+      "operationId": "get_executor_info_executor__version___chain_id__get"
+    },
+    "Liquidity sources supported by Odos": {
+      "type": "operation",
+      "path": "/info/liquidity-sources/{chain_id}",
+      "method": "GET",
+      "tags": [
+        "Information"
+      ],
+      "operationId": "get_liquidity_sources_info_liquidity_sources__chain_id__get"
+    },
+    "RWA market intelligence": {
+      "type": "operation",
+      "path": "/info/market-intelligence",
+      "method": "GET",
+      "tags": [
+        "Information"
+      ],
+      "operationId": "get_market_intelligence_info_market_intelligence_get"
+    },
+    "Tokens supported by Odos": {
+      "type": "operation",
+      "path": "/info/tokens/{chain_id}",
+      "method": "GET",
+      "tags": [
+        "Information"
+      ],
+      "operationId": "get_token_map_info_tokens__chain_id__get"
+    },
+    "Get the current block number for Odos on given chain": {
+      "type": "operation",
+      "path": "/info/current-block/{chain_id}",
+      "method": "GET",
+      "tags": [
+        "Information"
+      ],
+      "operationId": "get_current_block_info_current_block__chain_id__get"
+    },
+    "Generate Odos Quote V3 + Assembly": {
+      "type": "operation",
+      "path": "/sor/swap/v3",
+      "method": "POST",
+      "tags": [
+        "Smart Order Routing"
+      ],
+      "operationId": "swap_v3_sor_swap_v3_post"
+    },
+    "Generate Odos Quote": {
+      "type": "operation",
+      "path": "/sor/quote/v2",
+      "method": "POST",
+      "tags": [
+        "Smart Order Routing"
+      ],
+      "operationId": "quote_sor_quote_v2_post"
+    },
+    "Generate Odos Zap Quote": {
+      "type": "operation",
+      "path": "/sor/quote/v2/zap",
+      "method": "POST",
+      "tags": [
+        "Smart Order Routing"
+      ],
+      "operationId": "quote_zap_sor_quote_v2_zap_post"
+    },
+    "Assemble Odos quote into transaction": {
+      "type": "operation",
+      "path": "/sor/assemble",
+      "method": "POST",
+      "tags": [
+        "Smart Order Routing"
+      ],
+      "operationId": "assemble_sor_assemble_post"
+    },
+    "Get list of available currencies": {
+      "type": "operation",
+      "path": "/pricing/currencies",
+      "method": "GET",
+      "tags": [
+        "Pricing"
+      ],
+      "operationId": "get_currencies_pricing_currencies_get"
+    },
+    "Get single token price": {
+      "type": "operation",
+      "path": "/pricing/token/{chain_id}/{token_addr}",
+      "method": "GET",
+      "tags": [
+        "Pricing"
+      ],
+      "operationId": "get_token_price_pricing_token__chain_id___token_addr__get"
+    },
+    "Get all chain whitelisted token prices, unless list is specified": {
+      "type": "operation",
+      "path": "/pricing/token/{chain_id}",
+      "method": "GET",
+      "tags": [
+        "Pricing"
+      ],
+      "operationId": "get_chain_token_prices_pricing_token__chain_id__get"
+    },
+    "AssemblePathRequest": {
+      "type": "schema",
+      "description": "Assemble Path Request Schema"
+    },
+    "ChainTokenPriceMap": {
+      "type": "schema",
+      "description": "All token prices for a given chain\n\nAttributes:\n    currencyId (str): price service id of the currency\n    tokenPrices (dict): Token and price"
+    },
+    "ContractInfo": {
+      "type": "schema",
+      "description": "Odos Contract Info Schema"
+    },
+    "CurrencyInfo": {
+      "type": "schema",
+      "description": "Schema for supported currency info\n\nAttributes:TokenPrice\n    id (str): price service id of the currency\n    name (str): name of currency corresponding to ID"
+    },
+    "CurrencyInfoList": {
+      "type": "schema",
+      "description": "Schema for list of supported currency info\n\nAttributes:\n    currencies (List[CurrencyInfo]): list of supported currency info entries"
+    },
+    "CurrentBlockNumber": {
+      "type": "schema",
+      "description": "Schema for current block number response\n\nAttributes:\n    blockNumber (int): current odos block number"
+    },
+    "ExecutorAddress": {
+      "type": "schema",
+      "description": "Odos Executor Address schema"
+    },
+    "HTTPValidationError": {
+      "type": "schema",
+      "description": ""
+    },
+    "LiquiditySources": {
+      "type": "schema",
+      "description": "Odos liquidity sources schema"
+    },
+    "OdosApiVersion": {
+      "type": "schema",
+      "description": "Odos API supported versions"
+    },
+    "PathRequestV2": {
+      "type": "schema",
+      "description": "Public facing path request v2 schema"
+    },
+    "PathRequestV3": {
+      "type": "schema",
+      "description": "Public facing path request v3 schema"
+    },
+    "PathResponse": {
+      "type": "schema",
+      "description": "Assembled Path Transaction Response including quote, transaction, and simulation data\n\nAttributes:\n    blockNumber (int): block number of transaction quote\n    gasEstimate (int): gas estimate for tran"
+    },
+    "PathVizImageConfig": {
+      "type": "schema",
+      "description": "Schema for path viz image config"
+    },
+    "QuoteResponse": {
+      "type": "schema",
+      "description": "Quote response schema"
+    },
+    "RouterAddress": {
+      "type": "schema",
+      "description": "Odos Router Address schema"
+    },
+    "Simulation": {
+      "type": "schema",
+      "description": "Simulation data schema\n\nAttributes:\n    is_success (bool): true if no errors were detected during simulation\n    amountsOut (List[int]): list of amounts out from simulation\n    gasEstimate (int): on-c"
+    },
+    "SimulationError": {
+      "type": "schema",
+      "description": "Simulation error schema\n\nAttributes:\n    type (str): error type\n    errorMessage (str): content of the simulation error message"
+    },
+    "SupportedChains": {
+      "type": "schema",
+      "description": "Supported Chains schema"
+    },
+    "SwapRequestV3": {
+      "type": "schema",
+      "description": ""
+    },
+    "SwapResponse": {
+      "type": "schema",
+      "description": "Swap endpoint response"
+    },
+    "Token": {
+      "type": "schema",
+      "description": "Token Schema"
+    },
+    "TokenAmount": {
+      "type": "schema",
+      "description": "Quote token input amount schema"
+    },
+    "TokenMap": {
+      "type": "schema",
+      "description": "Token Map Schema"
+    },
+    "TokenPrice": {
+      "type": "schema",
+      "description": "Schema for basic token price structure\n\nAttributes:\n    currencyId (str): price service id of the currency\n    price (Optional[float]): fiat price of asset if it is available"
+    },
+    "TokenProportion": {
+      "type": "schema",
+      "description": "Quote token output proportion schema"
+    },
+    "Transaction": {
+      "type": "schema",
+      "description": "Assembled Transaction Schema\n\nAttributes:\n    gas (int): txn gas amount\n    gasPrice (int): txn gas price in gwei\n    value (str): value of the transaction\n    to (str): txn to address\n    from_ (str)"
+    },
+    "ValidationError": {
+      "type": "schema",
+      "description": ""
+    }
+  },
+  "domain_vocabulary": {
+    "DEX Aggregator": "A platform that sources liquidity from multiple decentralized exchanges to find the best swap route",
+    "Smart Order Router (SOR)": "Odos algorithm that finds optimal multi-hop trade routes across 1050+ liquidity pools",
+    "pathId": "Unique identifier for a quoted swap path, valid for 60 seconds before assembly",
+    "slippageLimitPercent": "Maximum acceptable percent difference between quoted and executed price",
+    "chainId": "EVM chain identifier (e.g. 1 for Ethereum mainnet)",
+    "liquidity source": "A DEX, AMM, order book, lending protocol, or RFQ system providing token swap liquidity",
+    "zap": "Single-transaction liquidity provisioning using any input token combination",
+    "RFQ": "Request for Quote - off-chain liquidity sources with time-sensitive quotes",
+    "compact": "Odos V2 optimized call data encoding for lower gas costs",
+    "pathVizImage": "Base64-encoded SVG visualization of the swap routing path",
+    "netOutValue": "USD value of output tokens after deducting gas costs",
+    "priceImpact": "Percent decrease in realized price vs initial price due to trade size",
+    "permit2": "ERC-2612 permit signature scheme for gasless token approvals",
+    "referralCode": "Partner code enabling fee sharing and usage tracking for integrators",
+    "EVM": "Ethereum Virtual Machine - the runtime for smart contracts on compatible chains",
+    "ERC-20": "Standard Ethereum token interface used for all Odos input/output tokens",
+    "sourceBlacklist": "List of liquidity provider names to exclude from routing",
+    "sourceWhitelist": "List of liquidity providers to exclusively use for routing",
+    "poolBlacklist": "List of specific pool addresses to exclude from routing",
+    "assemble": "Step that converts a quoted pathId into executable on-chain transaction data",
+    "gasEstimate": "Estimated gas units required to execute the swap transaction",
+    "gweiPerGas": "Gas price in gwei units used for fee calculation"
+  }
+}

@@ -1,0 +1,2270 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Odos API Schemas",
+  "description": "JSON Schema definitions extracted from the Odos API OpenAPI 3.1 specification",
+  "definitions": {
+    "AssemblePathRequest": {
+      "properties": {
+        "userAddr": {
+          "type": "string",
+          "title": "Useraddr",
+          "examples": [
+            "0x47E2D28169738039755586743E2dfCF3bd643f86"
+          ]
+        },
+        "pathId": {
+          "type": "string",
+          "title": "Pathid",
+          "examples": [
+            "95bb963d193cd229a0b4087f34382ea2"
+          ]
+        },
+        "simulate": {
+          "anyOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Simulate",
+          "default": false,
+          "examples": [
+            false
+          ]
+        },
+        "receiver": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Receiver",
+          "examples": [
+            null
+          ]
+        },
+        "permit2Signature": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Permit2Signature",
+          "examples": [
+            null
+          ]
+        }
+      },
+      "type": "object",
+      "required": [
+        "userAddr",
+        "pathId"
+      ],
+      "title": "AssemblePathRequest",
+      "description": "Assemble Path Request Schema",
+      "examples": [
+        {
+          "pathId": "95bb963d193cd229a0b4087f34382ea2",
+          "simulate": false,
+          "userAddr": "0x47E2D28169738039755586743E2dfCF3bd643f86"
+        }
+      ]
+    },
+    "ChainTokenPriceMap": {
+      "properties": {
+        "deprecated": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Deprecated"
+        },
+        "traceId": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Traceid"
+        },
+        "currencyId": {
+          "type": "string",
+          "title": "Currencyid"
+        },
+        "tokenPrices": {
+          "additionalProperties": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "type": "object",
+          "title": "Tokenprices"
+        }
+      },
+      "type": "object",
+      "required": [
+        "currencyId",
+        "tokenPrices"
+      ],
+      "title": "ChainTokenPriceMap",
+      "description": "All token prices for a given chain\n\nAttributes:\n    currencyId (str): price service id of the currency\n    tokenPrices (dict): Token and price"
+    },
+    "ContractInfo": {
+      "properties": {
+        "deprecated": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Deprecated"
+        },
+        "traceId": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Traceid"
+        },
+        "chainId": {
+          "type": "integer",
+          "title": "Chainid"
+        },
+        "routerAddress": {
+          "type": "string",
+          "title": "Routeraddress"
+        },
+        "executorAddress": {
+          "type": "string",
+          "title": "Executoraddress"
+        },
+        "routerAbi": {
+          "anyOf": [
+            {
+              "additionalProperties": true,
+              "type": "object"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Routerabi"
+        },
+        "erc20Abi": {
+          "anyOf": [
+            {
+              "additionalProperties": true,
+              "type": "object"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Erc20Abi"
+        }
+      },
+      "type": "object",
+      "required": [
+        "chainId",
+        "routerAddress",
+        "executorAddress",
+        "routerAbi",
+        "erc20Abi"
+      ],
+      "title": "ContractInfo",
+      "description": "Odos Contract Info Schema"
+    },
+    "CurrencyInfo": {
+      "properties": {
+        "id": {
+          "type": "string",
+          "title": "Id"
+        },
+        "name": {
+          "type": "string",
+          "title": "Name"
+        }
+      },
+      "type": "object",
+      "required": [
+        "id",
+        "name"
+      ],
+      "title": "CurrencyInfo",
+      "description": "Schema for supported currency info\n\nAttributes:TokenPrice\n    id (str): price service id of the currency\n    name (str): name of currency corresponding to ID"
+    },
+    "CurrencyInfoList": {
+      "properties": {
+        "deprecated": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Deprecated"
+        },
+        "traceId": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Traceid"
+        },
+        "currencies": {
+          "items": {
+            "$ref": "#/components/schemas/CurrencyInfo"
+          },
+          "type": "array",
+          "title": "Currencies"
+        }
+      },
+      "type": "object",
+      "required": [
+        "currencies"
+      ],
+      "title": "CurrencyInfoList",
+      "description": "Schema for list of supported currency info\n\nAttributes:\n    currencies (List[CurrencyInfo]): list of supported currency info entries"
+    },
+    "CurrentBlockNumber": {
+      "properties": {
+        "deprecated": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Deprecated"
+        },
+        "traceId": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Traceid"
+        },
+        "blockNumber": {
+          "type": "integer",
+          "title": "Blocknumber"
+        }
+      },
+      "type": "object",
+      "required": [
+        "blockNumber"
+      ],
+      "title": "CurrentBlockNumber",
+      "description": "Schema for current block number response\n\nAttributes:\n    blockNumber (int): current odos block number"
+    },
+    "ExecutorAddress": {
+      "properties": {
+        "deprecated": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Deprecated"
+        },
+        "traceId": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Traceid"
+        },
+        "address": {
+          "type": "string",
+          "pattern": "^0x([a-fA-F0-9]){40}$",
+          "title": "Address",
+          "description": "Address of Odos Executor"
+        }
+      },
+      "type": "object",
+      "required": [
+        "address"
+      ],
+      "title": "ExecutorAddress",
+      "description": "Odos Executor Address schema"
+    },
+    "HTTPValidationError": {
+      "properties": {
+        "detail": {
+          "items": {
+            "$ref": "#/components/schemas/ValidationError"
+          },
+          "type": "array",
+          "title": "Detail"
+        }
+      },
+      "type": "object",
+      "title": "HTTPValidationError"
+    },
+    "LiquiditySources": {
+      "properties": {
+        "deprecated": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Deprecated"
+        },
+        "traceId": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Traceid"
+        },
+        "sources": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array",
+          "title": "Sources"
+        }
+      },
+      "type": "object",
+      "required": [
+        "sources"
+      ],
+      "title": "LiquiditySources",
+      "description": "Odos liquidity sources schema"
+    },
+    "OdosApiVersion": {
+      "type": "string",
+      "enum": [
+        "v3",
+        "v2"
+      ],
+      "title": "OdosApiVersion",
+      "description": "Odos API supported versions"
+    },
+    "PathRequestV2": {
+      "properties": {
+        "deprecated": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Deprecated"
+        },
+        "traceId": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Traceid"
+        },
+        "chainId": {
+          "type": "integer",
+          "title": "Chainid",
+          "description": "Chain ID to request path for",
+          "examples": [
+            1
+          ]
+        },
+        "inputTokens": {
+          "items": {
+            "$ref": "#/components/schemas/TokenAmount"
+          },
+          "type": "array",
+          "maxItems": 10,
+          "minItems": 1,
+          "title": "Inputtokens",
+          "description": "Input tokens and amounts for quote",
+          "examples": [
+            [
+              {
+                "amount": "189000000",
+                "tokenAddress": "0x2260FAC5E5542a773Aa44fBCfeDf7C193bc2C599"
+              }
+            ]
+          ]
+        },
+        "outputTokens": {
+          "items": {
+            "$ref": "#/components/schemas/TokenProportion"
+          },
+          "type": "array",
+          "maxItems": 10,
+          "minItems": 1,
+          "title": "Outputtokens",
+          "description": "Output tokens and proportions for quote",
+          "examples": [
+            [
+              {
+                "proportion": 1.0,
+                "tokenAddress": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2"
+              }
+            ]
+          ]
+        },
+        "gasPrice": {
+          "anyOf": [
+            {
+              "type": "number",
+              "exclusiveMinimum": 0.0
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Gasprice",
+          "description": "Gas Price",
+          "examples": [
+            20
+          ]
+        },
+        "userAddr": {
+          "anyOf": [
+            {
+              "type": "string",
+              "pattern": "^0x([a-fA-F0-9]){40}$"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Useraddr",
+          "description": "Address of wallet to use to generate transaction",
+          "default": "0x47E2D28169738039755586743E2dfCF3bd643f86",
+          "examples": [
+            "0x47E2D28169738039755586743E2dfCF3bd643f86"
+          ]
+        },
+        "slippageLimitPercent": {
+          "anyOf": [
+            {
+              "type": "number",
+              "exclusiveMinimum": 0.0
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Slippagelimitpercent",
+          "description": "Slippage to use for checking the path is valid",
+          "default": 0.3,
+          "examples": [
+            0.3
+          ]
+        },
+        "sourceBlacklist": {
+          "anyOf": [
+            {
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Sourceblacklist",
+          "description": "List of liquidity providers that are not to be used for the swap path.",
+          "examples": [
+            []
+          ]
+        },
+        "sourceWhitelist": {
+          "anyOf": [
+            {
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Sourcewhitelist",
+          "description": "List of liquidity providers to exclusively use for the swap path.",
+          "examples": [
+            []
+          ]
+        },
+        "poolBlacklist": {
+          "anyOf": [
+            {
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Poolblacklist",
+          "description": "List of pool addresses to exclude from swap path consideration",
+          "examples": [
+            []
+          ]
+        },
+        "pathViz": {
+          "anyOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Pathviz",
+          "default": false,
+          "examples": [
+            false
+          ]
+        },
+        "pathVizImage": {
+          "anyOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Pathvizimage",
+          "default": false
+        },
+        "pathVizImageConfig": {
+          "anyOf": [
+            {
+              "$ref": "#/components/schemas/PathVizImageConfig"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "disableRFQs": {
+          "anyOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Disablerfqs",
+          "description": "Flag to disable all off-chain RFQs from order routing",
+          "default": true,
+          "examples": [
+            true
+          ]
+        },
+        "referralCode": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Referralcode",
+          "default": 0,
+          "examples": [
+            0
+          ]
+        },
+        "compact": {
+          "anyOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Compact",
+          "default": true,
+          "examples": [
+            true
+          ]
+        },
+        "likeAsset": {
+          "anyOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Likeasset",
+          "default": false,
+          "examples": [
+            false
+          ]
+        },
+        "simple": {
+          "anyOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Simple",
+          "default": false,
+          "examples": [
+            false
+          ]
+        }
+      },
+      "type": "object",
+      "required": [
+        "chainId",
+        "inputTokens",
+        "outputTokens"
+      ],
+      "title": "PathRequestV2",
+      "description": "Public facing path request v2 schema",
+      "examples": [
+        {
+          "chainId": 1,
+          "compact": true,
+          "gasPrice": 20,
+          "inputTokens": [
+            {
+              "amount": "189000000",
+              "tokenAddress": "0x2260FAC5E5542a773Aa44fBCfeDf7C193bc2C599"
+            }
+          ],
+          "outputTokens": [
+            {
+              "proportion": 1,
+              "tokenAddress": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2"
+            }
+          ],
+          "referralCode": 0,
+          "slippageLimitPercent": 0.3,
+          "sourceBlacklist": [],
+          "sourceWhitelist": [],
+          "userAddr": "0x47E2D28169738039755586743E2dfCF3bd643f86"
+        }
+      ]
+    },
+    "PathRequestV3": {
+      "properties": {
+        "deprecated": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Deprecated"
+        },
+        "traceId": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Traceid"
+        },
+        "chainId": {
+          "type": "integer",
+          "title": "Chainid",
+          "description": "Chain ID to request path for",
+          "examples": [
+            1
+          ]
+        },
+        "inputTokens": {
+          "items": {
+            "$ref": "#/components/schemas/TokenAmount"
+          },
+          "type": "array",
+          "maxItems": 10,
+          "minItems": 1,
+          "title": "Inputtokens",
+          "description": "Input tokens and amounts for quote",
+          "examples": [
+            [
+              {
+                "amount": "189000000",
+                "tokenAddress": "0x2260FAC5E5542a773Aa44fBCfeDf7C193bc2C599"
+              }
+            ]
+          ]
+        },
+        "outputTokens": {
+          "items": {
+            "$ref": "#/components/schemas/TokenProportion"
+          },
+          "type": "array",
+          "maxItems": 10,
+          "minItems": 1,
+          "title": "Outputtokens",
+          "description": "Output tokens and proportions for quote",
+          "examples": [
+            [
+              {
+                "proportion": 1.0,
+                "tokenAddress": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2"
+              }
+            ]
+          ]
+        },
+        "gasPrice": {
+          "anyOf": [
+            {
+              "type": "number",
+              "exclusiveMinimum": 0.0
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Gasprice",
+          "description": "Gas Price",
+          "examples": [
+            20
+          ]
+        },
+        "userAddr": {
+          "anyOf": [
+            {
+              "type": "string",
+              "pattern": "^0x([a-fA-F0-9]){40}$"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Useraddr",
+          "description": "Address of wallet to use to generate transaction",
+          "default": "0x47E2D28169738039755586743E2dfCF3bd643f86",
+          "examples": [
+            "0x47E2D28169738039755586743E2dfCF3bd643f86"
+          ]
+        },
+        "slippageLimitPercent": {
+          "anyOf": [
+            {
+              "type": "number",
+              "exclusiveMinimum": 0.0
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Slippagelimitpercent",
+          "description": "Slippage to use for checking the path is valid",
+          "default": 0.3,
+          "examples": [
+            0.3
+          ]
+        },
+        "sourceBlacklist": {
+          "anyOf": [
+            {
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Sourceblacklist",
+          "description": "List of liquidity providers that are not to be used for the swap path.",
+          "examples": [
+            []
+          ]
+        },
+        "sourceWhitelist": {
+          "anyOf": [
+            {
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Sourcewhitelist",
+          "description": "List of liquidity providers to exclusively use for the swap path.",
+          "examples": [
+            []
+          ]
+        },
+        "poolBlacklist": {
+          "anyOf": [
+            {
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Poolblacklist",
+          "description": "List of pool addresses to exclude from swap path consideration",
+          "examples": [
+            []
+          ]
+        },
+        "pathViz": {
+          "anyOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Pathviz",
+          "default": false,
+          "examples": [
+            false
+          ]
+        },
+        "pathVizImage": {
+          "anyOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Pathvizimage",
+          "default": false
+        },
+        "pathVizImageConfig": {
+          "anyOf": [
+            {
+              "$ref": "#/components/schemas/PathVizImageConfig"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "disableRFQs": {
+          "anyOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Disablerfqs",
+          "description": "Flag to disable all off-chain RFQs from order routing",
+          "default": true,
+          "examples": [
+            true
+          ]
+        },
+        "referralCode": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Referralcode",
+          "examples": [
+            0
+          ]
+        },
+        "referralFee": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Referralfee",
+          "examples": [
+            0
+          ]
+        },
+        "referralFeeRecipient": {
+          "anyOf": [
+            {
+              "type": "string",
+              "pattern": "^0x([a-fA-F0-9]){40}$"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Referralfeerecipient",
+          "description": "Address of wallet to receive referral fee",
+          "examples": [
+            "0x47E2D28169738039755586743E2dfCF3bd643f86"
+          ]
+        },
+        "compact": {
+          "anyOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Compact",
+          "default": true,
+          "examples": [
+            true
+          ]
+        },
+        "likeAsset": {
+          "anyOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Likeasset",
+          "default": false,
+          "examples": [
+            false
+          ]
+        },
+        "simple": {
+          "anyOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Simple",
+          "default": false,
+          "examples": [
+            false
+          ]
+        },
+        "permit2": {
+          "anyOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Permit2",
+          "default": false,
+          "examples": [
+            false
+          ]
+        }
+      },
+      "type": "object",
+      "required": [
+        "chainId",
+        "inputTokens",
+        "outputTokens"
+      ],
+      "title": "PathRequestV3",
+      "description": "Public facing path request v3 schema",
+      "examples": [
+        {
+          "chainId": 1,
+          "compact": true,
+          "gasPrice": 20,
+          "inputTokens": [
+            {
+              "amount": "189000000",
+              "tokenAddress": "0x2260FAC5E5542a773Aa44fBCfeDf7C193bc2C599"
+            }
+          ],
+          "outputTokens": [
+            {
+              "proportion": 1,
+              "tokenAddress": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2"
+            }
+          ],
+          "referralCode": 0,
+          "slippageLimitPercent": 0.3,
+          "sourceBlacklist": [],
+          "sourceWhitelist": [],
+          "userAddr": "0x47E2D28169738039755586743E2dfCF3bd643f86"
+        }
+      ]
+    },
+    "PathResponse": {
+      "properties": {
+        "deprecated": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Deprecated"
+        },
+        "traceId": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Traceid"
+        },
+        "blockNumber": {
+          "type": "integer",
+          "title": "Blocknumber"
+        },
+        "gasEstimate": {
+          "type": "integer",
+          "title": "Gasestimate"
+        },
+        "gasEstimateValue": {
+          "type": "number",
+          "title": "Gasestimatevalue"
+        },
+        "inputTokens": {
+          "items": {
+            "$ref": "#/components/schemas/TokenAmount"
+          },
+          "type": "array",
+          "title": "Inputtokens"
+        },
+        "outputTokens": {
+          "items": {
+            "$ref": "#/components/schemas/TokenAmount"
+          },
+          "type": "array",
+          "title": "Outputtokens"
+        },
+        "netOutValue": {
+          "type": "number",
+          "title": "Netoutvalue"
+        },
+        "outValues": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array",
+          "title": "Outvalues"
+        },
+        "transaction": {
+          "anyOf": [
+            {
+              "$ref": "#/components/schemas/Transaction"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "simulation": {
+          "anyOf": [
+            {
+              "$ref": "#/components/schemas/Simulation"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "type": "object",
+      "required": [
+        "blockNumber",
+        "gasEstimate",
+        "gasEstimateValue",
+        "inputTokens",
+        "outputTokens",
+        "netOutValue",
+        "outValues",
+        "transaction",
+        "simulation"
+      ],
+      "title": "PathResponse",
+      "description": "Assembled Path Transaction Response including quote, transaction, and simulation data\n\nAttributes:\n    blockNumber (int): block number of transaction quote\n    gasEstimate (int): gas estimate for transaction quote\n    gasEstimateValue (float): gas estimate value for transaction quote in gwei\n    inputTokens (List[TokenAmount]): list of input token amounts and input values\n    outputTokens (List[TokenAmount]): list of output token amounts and output values\n    netOutValue (float): new out value of transaction from quote\n    outValues (List[str]) out values from transaction quote\n    transaction (Optional[Transaction]): assembled transaction data for quote\n    simulation (Optional[Simulation]): simulation output data if enabled\n    pathVizImage (Optional[str]): path viz image if requested"
+    },
+    "PathVizImageConfig": {
+      "properties": {
+        "linkColors": {
+          "anyOf": [
+            {
+              "items": {
+                "type": "string",
+                "pattern": "^#(?:[A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$"
+              },
+              "type": "array"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Linkcolors",
+          "examples": [
+            null
+          ]
+        },
+        "nodeColor": {
+          "anyOf": [
+            {
+              "type": "string",
+              "pattern": "^#(?:[A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Nodecolor",
+          "examples": [
+            null
+          ]
+        },
+        "nodeTextColor": {
+          "anyOf": [
+            {
+              "type": "string",
+              "pattern": "^#(?:[A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Nodetextcolor",
+          "examples": [
+            null
+          ]
+        },
+        "legendTextColor": {
+          "anyOf": [
+            {
+              "type": "string",
+              "pattern": "^#(?:[A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Legendtextcolor",
+          "examples": [
+            null
+          ]
+        },
+        "width": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Width",
+          "examples": [
+            null
+          ]
+        },
+        "height": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Height",
+          "examples": [
+            null
+          ]
+        }
+      },
+      "additionalProperties": true,
+      "type": "object",
+      "title": "PathVizImageConfig",
+      "description": "Schema for path viz image config"
+    },
+    "QuoteResponse": {
+      "properties": {
+        "deprecated": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Deprecated"
+        },
+        "traceId": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Traceid"
+        },
+        "inTokens": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array",
+          "title": "Intokens"
+        },
+        "outTokens": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array",
+          "title": "Outtokens"
+        },
+        "inAmounts": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array",
+          "title": "Inamounts"
+        },
+        "outAmounts": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array",
+          "title": "Outamounts"
+        },
+        "gasEstimate": {
+          "type": "number",
+          "title": "Gasestimate"
+        },
+        "dataGasEstimate": {
+          "type": "integer",
+          "title": "Datagasestimate"
+        },
+        "gweiPerGas": {
+          "type": "number",
+          "title": "Gweipergas"
+        },
+        "gasEstimateValue": {
+          "type": "number",
+          "title": "Gasestimatevalue"
+        },
+        "inValues": {
+          "items": {
+            "type": "number"
+          },
+          "type": "array",
+          "title": "Invalues"
+        },
+        "outValues": {
+          "items": {
+            "type": "number"
+          },
+          "type": "array",
+          "title": "Outvalues"
+        },
+        "netOutValue": {
+          "type": "number",
+          "title": "Netoutvalue"
+        },
+        "priceImpact": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Priceimpact"
+        },
+        "percentDiff": {
+          "type": "number",
+          "title": "Percentdiff"
+        },
+        "permit2Message": {
+          "anyOf": [
+            {
+              "additionalProperties": true,
+              "type": "object"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Permit2Message"
+        },
+        "permit2Hash": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Permit2Hash"
+        },
+        "partnerFeePercent": {
+          "type": "number",
+          "title": "Partnerfeepercent",
+          "default": 0
+        },
+        "pathId": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Pathid"
+        },
+        "pathViz": {
+          "anyOf": [
+            {
+              "additionalProperties": true,
+              "type": "object"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Pathviz"
+        },
+        "pathVizImage": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Pathvizimage"
+        },
+        "blockNumber": {
+          "type": "integer",
+          "title": "Blocknumber"
+        }
+      },
+      "type": "object",
+      "required": [
+        "inTokens",
+        "outTokens",
+        "inAmounts",
+        "outAmounts",
+        "gasEstimate",
+        "dataGasEstimate",
+        "gweiPerGas",
+        "gasEstimateValue",
+        "inValues",
+        "outValues",
+        "netOutValue",
+        "percentDiff",
+        "blockNumber"
+      ],
+      "title": "QuoteResponse",
+      "description": "Quote response schema"
+    },
+    "RouterAddress": {
+      "properties": {
+        "deprecated": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Deprecated"
+        },
+        "traceId": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Traceid"
+        },
+        "address": {
+          "type": "string",
+          "pattern": "^0x([a-fA-F0-9]){40}$",
+          "title": "Address",
+          "description": "Address of Odos Router"
+        }
+      },
+      "type": "object",
+      "required": [
+        "address"
+      ],
+      "title": "RouterAddress",
+      "description": "Odos Router Address schema"
+    },
+    "Simulation": {
+      "properties": {
+        "isSuccess": {
+          "type": "boolean",
+          "title": "Issuccess"
+        },
+        "amountsOut": {
+          "items": {
+            "type": "integer"
+          },
+          "type": "array",
+          "title": "Amountsout"
+        },
+        "gasEstimate": {
+          "type": "integer",
+          "title": "Gasestimate"
+        },
+        "simulationError": {
+          "anyOf": [
+            {
+              "$ref": "#/components/schemas/SimulationError"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "type": "object",
+      "required": [
+        "isSuccess",
+        "amountsOut",
+        "gasEstimate",
+        "simulationError"
+      ],
+      "title": "Simulation",
+      "description": "Simulation data schema\n\nAttributes:\n    is_success (bool): true if no errors were detected during simulation\n    amountsOut (List[int]): list of amounts out from simulation\n    gasEstimate (int): on-chain estimateGas raw response value\n    simulationError (Optional[SimulationError]): simulation error data (if error)"
+    },
+    "SimulationError": {
+      "properties": {
+        "type": {
+          "type": "string",
+          "title": "Type"
+        },
+        "errorMessage": {
+          "type": "string",
+          "title": "Errormessage"
+        }
+      },
+      "type": "object",
+      "required": [
+        "type",
+        "errorMessage"
+      ],
+      "title": "SimulationError",
+      "description": "Simulation error schema\n\nAttributes:\n    type (str): error type\n    errorMessage (str): content of the simulation error message"
+    },
+    "SupportedChains": {
+      "properties": {
+        "deprecated": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Deprecated"
+        },
+        "traceId": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Traceid"
+        },
+        "chains": {
+          "items": {
+            "type": "integer"
+          },
+          "type": "array",
+          "title": "Chains"
+        }
+      },
+      "type": "object",
+      "required": [
+        "chains"
+      ],
+      "title": "SupportedChains",
+      "description": "Supported Chains schema"
+    },
+    "SwapRequestV3": {
+      "properties": {
+        "deprecated": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Deprecated"
+        },
+        "traceId": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Traceid"
+        },
+        "chainId": {
+          "type": "integer",
+          "title": "Chainid",
+          "description": "Chain ID to request path for",
+          "examples": [
+            1
+          ]
+        },
+        "inputTokens": {
+          "items": {
+            "$ref": "#/components/schemas/TokenAmount"
+          },
+          "type": "array",
+          "maxItems": 10,
+          "minItems": 1,
+          "title": "Inputtokens",
+          "description": "Input tokens and amounts for quote",
+          "examples": [
+            [
+              {
+                "amount": "189000000",
+                "tokenAddress": "0x2260FAC5E5542a773Aa44fBCfeDf7C193bc2C599"
+              }
+            ]
+          ]
+        },
+        "outputTokens": {
+          "items": {
+            "$ref": "#/components/schemas/TokenProportion"
+          },
+          "type": "array",
+          "maxItems": 10,
+          "minItems": 1,
+          "title": "Outputtokens",
+          "description": "Output tokens and proportions for quote",
+          "examples": [
+            [
+              {
+                "proportion": 1.0,
+                "tokenAddress": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2"
+              }
+            ]
+          ]
+        },
+        "gasPrice": {
+          "anyOf": [
+            {
+              "type": "number",
+              "exclusiveMinimum": 0.0
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Gasprice",
+          "description": "Gas Price",
+          "examples": [
+            20
+          ]
+        },
+        "userAddr": {
+          "anyOf": [
+            {
+              "type": "string",
+              "pattern": "^0x([a-fA-F0-9]){40}$"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Useraddr",
+          "description": "Address of wallet to use to generate transaction",
+          "default": "0x47E2D28169738039755586743E2dfCF3bd643f86",
+          "examples": [
+            "0x47E2D28169738039755586743E2dfCF3bd643f86"
+          ]
+        },
+        "slippageLimitPercent": {
+          "anyOf": [
+            {
+              "type": "number",
+              "exclusiveMinimum": 0.0
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Slippagelimitpercent",
+          "description": "Slippage to use for checking the path is valid",
+          "default": 0.3,
+          "examples": [
+            0.3
+          ]
+        },
+        "sourceBlacklist": {
+          "anyOf": [
+            {
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Sourceblacklist",
+          "description": "List of liquidity providers that are not to be used for the swap path.",
+          "examples": [
+            []
+          ]
+        },
+        "sourceWhitelist": {
+          "anyOf": [
+            {
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Sourcewhitelist",
+          "description": "List of liquidity providers to exclusively use for the swap path.",
+          "examples": [
+            []
+          ]
+        },
+        "poolBlacklist": {
+          "anyOf": [
+            {
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Poolblacklist",
+          "description": "List of pool addresses to exclude from swap path consideration",
+          "examples": [
+            []
+          ]
+        },
+        "pathViz": {
+          "anyOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Pathviz",
+          "default": false,
+          "examples": [
+            false
+          ]
+        },
+        "pathVizImage": {
+          "anyOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Pathvizimage",
+          "default": false
+        },
+        "pathVizImageConfig": {
+          "anyOf": [
+            {
+              "$ref": "#/components/schemas/PathVizImageConfig"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "disableRFQs": {
+          "anyOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Disablerfqs",
+          "description": "Flag to disable all off-chain RFQs from order routing",
+          "default": true,
+          "examples": [
+            true
+          ]
+        },
+        "referralCode": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Referralcode",
+          "examples": [
+            0
+          ]
+        },
+        "referralFee": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Referralfee",
+          "examples": [
+            0
+          ]
+        },
+        "referralFeeRecipient": {
+          "anyOf": [
+            {
+              "type": "string",
+              "pattern": "^0x([a-fA-F0-9]){40}$"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Referralfeerecipient",
+          "description": "Address of wallet to receive referral fee",
+          "examples": [
+            "0x47E2D28169738039755586743E2dfCF3bd643f86"
+          ]
+        },
+        "compact": {
+          "anyOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Compact",
+          "default": true,
+          "examples": [
+            true
+          ]
+        },
+        "likeAsset": {
+          "anyOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Likeasset",
+          "default": false,
+          "examples": [
+            false
+          ]
+        },
+        "simple": {
+          "anyOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Simple",
+          "default": false,
+          "examples": [
+            false
+          ]
+        },
+        "permit2": {
+          "anyOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Permit2",
+          "default": false,
+          "examples": [
+            false
+          ]
+        },
+        "simulate": {
+          "anyOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Simulate",
+          "default": false,
+          "examples": [
+            false
+          ]
+        },
+        "receiver": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Receiver",
+          "examples": [
+            null
+          ]
+        }
+      },
+      "type": "object",
+      "required": [
+        "chainId",
+        "inputTokens",
+        "outputTokens"
+      ],
+      "title": "SwapRequestV3",
+      "examples": [
+        {
+          "chainId": 1,
+          "compact": true,
+          "gasPrice": 20,
+          "inputTokens": [
+            {
+              "amount": "189000000",
+              "tokenAddress": "0x2260FAC5E5542a773Aa44fBCfeDf7C193bc2C599"
+            }
+          ],
+          "outputTokens": [
+            {
+              "proportion": 1,
+              "tokenAddress": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2"
+            }
+          ],
+          "referralCode": 0,
+          "slippageLimitPercent": 0.3,
+          "sourceBlacklist": [],
+          "sourceWhitelist": [],
+          "userAddr": "0x47E2D28169738039755586743E2dfCF3bd643f86"
+        }
+      ]
+    },
+    "SwapResponse": {
+      "properties": {
+        "quote": {
+          "$ref": "#/components/schemas/QuoteResponse"
+        },
+        "assembly": {
+          "$ref": "#/components/schemas/PathResponse"
+        }
+      },
+      "type": "object",
+      "required": [
+        "quote",
+        "assembly"
+      ],
+      "title": "SwapResponse",
+      "description": "Swap endpoint response"
+    },
+    "Token": {
+      "properties": {
+        "name": {
+          "type": "string",
+          "title": "Name"
+        },
+        "symbol": {
+          "type": "string",
+          "title": "Symbol"
+        },
+        "decimals": {
+          "type": "integer",
+          "title": "Decimals"
+        },
+        "assetId": {
+          "type": "string",
+          "title": "Assetid"
+        },
+        "assetType": {
+          "type": "string",
+          "title": "Assettype"
+        },
+        "protocolId": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Protocolid"
+        },
+        "isRebasing": {
+          "type": "boolean",
+          "title": "Isrebasing"
+        }
+      },
+      "type": "object",
+      "required": [
+        "name",
+        "symbol",
+        "decimals",
+        "assetId",
+        "assetType",
+        "protocolId",
+        "isRebasing"
+      ],
+      "title": "Token",
+      "description": "Token Schema"
+    },
+    "TokenAmount": {
+      "properties": {
+        "tokenAddress": {
+          "type": "string",
+          "pattern": "^0x([a-fA-F0-9]){40}$",
+          "title": "Tokenaddress",
+          "description": "Token contract address"
+        },
+        "amount": {
+          "type": "string",
+          "pattern": "^\\d{1,64}$",
+          "title": "Amount",
+          "description": "Amount of token to swap"
+        }
+      },
+      "type": "object",
+      "required": [
+        "tokenAddress",
+        "amount"
+      ],
+      "title": "TokenAmount",
+      "description": "Quote token input amount schema"
+    },
+    "TokenMap": {
+      "properties": {
+        "deprecated": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Deprecated"
+        },
+        "traceId": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Traceid"
+        },
+        "tokenMap": {
+          "additionalProperties": {
+            "$ref": "#/components/schemas/Token"
+          },
+          "type": "object",
+          "title": "Tokenmap"
+        }
+      },
+      "type": "object",
+      "required": [
+        "tokenMap"
+      ],
+      "title": "TokenMap",
+      "description": "Token Map Schema"
+    },
+    "TokenPrice": {
+      "properties": {
+        "deprecated": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Deprecated"
+        },
+        "traceId": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Traceid"
+        },
+        "currencyId": {
+          "type": "string",
+          "title": "Currencyid"
+        },
+        "price": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Price"
+        }
+      },
+      "type": "object",
+      "required": [
+        "currencyId",
+        "price"
+      ],
+      "title": "TokenPrice",
+      "description": "Schema for basic token price structure\n\nAttributes:\n    currencyId (str): price service id of the currency\n    price (Optional[float]): fiat price of asset if it is available"
+    },
+    "TokenProportion": {
+      "properties": {
+        "tokenAddress": {
+          "type": "string",
+          "pattern": "^0x([a-fA-F0-9]){40}$",
+          "title": "Tokenaddress",
+          "description": "Token contract address"
+        },
+        "proportion": {
+          "type": "number",
+          "title": "Proportion",
+          "description": "Proportion of token",
+          "default": 1
+        }
+      },
+      "type": "object",
+      "required": [
+        "tokenAddress"
+      ],
+      "title": "TokenProportion",
+      "description": "Quote token output proportion schema"
+    },
+    "Transaction": {
+      "properties": {
+        "gas": {
+          "type": "integer",
+          "title": "Gas"
+        },
+        "gasPrice": {
+          "type": "integer",
+          "title": "Gasprice"
+        },
+        "value": {
+          "type": "string",
+          "title": "Value"
+        },
+        "to": {
+          "type": "string",
+          "title": "To"
+        },
+        "from": {
+          "type": "string",
+          "title": "From"
+        },
+        "data": {
+          "type": "string",
+          "title": "Data"
+        },
+        "nonce": {
+          "type": "integer",
+          "title": "Nonce"
+        },
+        "chainId": {
+          "type": "integer",
+          "title": "Chainid"
+        }
+      },
+      "type": "object",
+      "required": [
+        "gas",
+        "gasPrice",
+        "value",
+        "to",
+        "from",
+        "data",
+        "nonce",
+        "chainId"
+      ],
+      "title": "Transaction",
+      "description": "Assembled Transaction Schema\n\nAttributes:\n    gas (int): txn gas amount\n    gasPrice (int): txn gas price in gwei\n    value (str): value of the transaction\n    to (str): txn to address\n    from_ (str): txn from address\n    data (str): txn bytecode to execute\n    nonce (int): current user nonce\n    chainId (int): id of the chain transaction was assembled for"
+    },
+    "ValidationError": {
+      "properties": {
+        "loc": {
+          "items": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "integer"
+              }
+            ]
+          },
+          "type": "array",
+          "title": "Location"
+        },
+        "msg": {
+          "type": "string",
+          "title": "Message"
+        },
+        "type": {
+          "type": "string",
+          "title": "Error Type"
+        }
+      },
+      "type": "object",
+      "required": [
+        "loc",
+        "msg",
+        "type"
+      ],
+      "title": "ValidationError"
+    }
+  }
+}
