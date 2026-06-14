@@ -1,0 +1,101 @@
+name: Odos API FinOps
+description: >-
+  Odos applies costs at two layers: subscription fees for API access and
+  protocol fees on swap volume processed through the API. The free public
+  tier has no subscription fee but incurs a 3 basis point protocol fee on
+  swap volume. Paid plans eliminate the protocol fee and add a flat monthly
+  subscription. Partners on paid plans can optionally add their own fees
+  (up to any amount) and receive 80% of those fees as revenue share, with
+  20% retained by Odos. Protocol fees vary by order type for end users.
+url: https://docs.odos.xyz/build/api_pricing
+created: '2026-06-14'
+modified: '2026-06-14'
+costs:
+  subscription:
+    - plan: Public (Free)
+      monthlyCost: 0.00
+      currency: USD
+      notes: No subscription fee; protocol fee applied to swap volume.
+    - plan: Builder
+      monthlyCost: 299.00
+      currency: USD
+      notes: Flat monthly fee; no protocol fee on swaps; includes partner monetization.
+    - plan: Scale
+      monthlyCost: 449.00
+      currency: USD
+      notes: Flat monthly fee; no protocol fee on swaps; higher monthly request cap.
+    - plan: Enterprise
+      monthlyCost: 0.00
+      currency: USD
+      notes: Custom pricing negotiated directly with Odos enterprise team.
+  protocolFees:
+    description: >-
+      Protocol fees are charged on swap volume for the free public API tier
+      (3 bps). End-user transaction fees vary by order type regardless of
+      API plan and represent the protocol revenue from the trading app.
+    freeApiVolumeFee:
+      amount: 3
+      unit: basis points
+      description: Applied to swap volume on the Public free plan API.
+    endUserFees:
+      - orderType: Market Order (Volatile/Custom Assets)
+        fee: 15
+        unit: basis points
+        notes: Applied in addition to gas and potential slippage.
+      - orderType: Market Order (Stablecoins)
+        fee: 3
+        unit: basis points
+        notes: Applied in addition to gas and potential slippage.
+      - orderType: Protected Swap (Volatile Assets)
+        fee: 25
+        unit: basis points
+        notes: Includes gas and slippage in the quoted output amount.
+      - orderType: Protected Swap (Stablecoins/Wrapped Tokens)
+        fee: 5
+        unit: basis points
+        notes: Includes gas and slippage in the quoted output amount.
+      - orderType: Cross-Chain Swap
+        fee: 25
+        unit: basis points
+        notes: Flat fee across all token combinations and directions.
+      - orderType: Limit Order
+        fee: 0
+        unit: basis points
+        notes: >-
+          Gas cost is estimated; if actual gas is lower, surplus becomes
+          protocol revenue while user receives favorable execution price.
+  partnerMonetization:
+    description: >-
+      Partners on Builder, Scale, or Enterprise plans can register optional
+      fees on their partner codes. These fees are charged on top of Odos
+      protocol fees and split between the partner and Odos.
+    partnerShare: 80
+    odosShare: 20
+    unit: percent
+    notes: >-
+      Partner fee amount is configurable; requires team configuration via
+      the Odos enterprise portal or Discord support channel.
+  legacyV2:
+    description: >-
+      The Odos V2 API (now deprecated and being migrated to V3) charged a
+      0.05% (5 bps) protocol fee on all swap volume. V3 migration is
+      required for all partners.
+    fee: 5
+    unit: basis points
+optimization:
+  - strategy: Upgrade to Builder Plan
+    description: >-
+      Moving from the free public plan to Builder ($299/month) eliminates
+      the 3 bps protocol fee on swap volume. At approximately $10M monthly
+      swap volume, the Builder plan is cost-neutral vs. the free tier
+      protocol fee ($3,000 in fees at 3 bps = $299 subscription).
+  - strategy: Partner Revenue Share
+    description: >-
+      Partners on paid plans can monetize their integrations by adding
+      custom fees and collecting 80% as revenue, potentially offsetting or
+      exceeding the subscription cost at sufficient trading volume.
+  - strategy: Scale vs. Builder
+    description: >-
+      The Scale plan at $449/month provides 5M vs. 3M monthly requests for
+      an extra $150/month. If monthly requests exceed 3M, Scale is the
+      cost-efficient choice over overage charges or plan throttling.

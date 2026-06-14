@@ -1,0 +1,81 @@
+name: Odos API Rate Limits
+description: >-
+  Odos enforces rate limits per API key based on the subscription plan.
+  All limits are applied at the API key level. The free public tier
+  includes a 1 RPS cap with 20,000 monthly requests. Paid plans increase
+  to 10 RPS. Enterprise plans offer custom limits negotiated directly with
+  the Odos team. Registration and API key issuance is handled through
+  the enterprise portal at enterprise.odos.xyz.
+url: https://docs.odos.xyz/build/api_pricing
+created: '2026-06-14'
+modified: '2026-06-14'
+rateLimits:
+  - plan: Public (Free)
+    limits:
+      - name: Requests Per Second
+        type: RPS
+        limit: 1
+        unit: second
+        scope: API Key
+        notes: >-
+          Previously documented as 2 RPS with 4,000 daily / 120,000 monthly;
+          current V3 plan specifies 1 RPS and 20,000 monthly requests.
+      - name: Monthly Requests
+        type: Monthly Cap
+        limit: 20000
+        unit: month
+        scope: API Key
+  - plan: Builder
+    limits:
+      - name: Requests Per Second
+        type: RPS
+        limit: 10
+        unit: second
+        scope: API Key
+      - name: Monthly Requests
+        type: Monthly Cap
+        limit: 3000000
+        unit: month
+        scope: API Key
+  - plan: Scale
+    limits:
+      - name: Requests Per Second
+        type: RPS
+        limit: 10
+        unit: second
+        scope: API Key
+      - name: Monthly Requests
+        type: Monthly Cap
+        limit: 5000000
+        unit: month
+        scope: API Key
+  - plan: Enterprise
+    limits:
+      - name: Requests Per Second
+        type: RPS
+        limit: 0
+        unit: second
+        scope: Custom
+        notes: Custom RPS negotiated with Odos enterprise team via Discord.
+      - name: Monthly Requests
+        type: Monthly Cap
+        limit: 0
+        unit: month
+        scope: Custom
+        notes: Custom monthly request volume negotiated with enterprise team.
+authentication:
+  - type: API Key
+    description: >-
+      API keys are issued automatically upon registration at
+      enterprise.odos.xyz. Authentication is performed by including the
+      API key in request headers. Google SSO or email verification
+      (via @dynamicauth.com) is used during registration.
+    portalUrl: https://enterprise.odos.xyz
+    headerName: apiKey
+handling:
+  - code: 429
+    meaning: Too Many Requests - rate limit exceeded for the current plan
+    action: Backoff and retry; consider upgrading plan for higher limits
+  - code: 401
+    meaning: Unauthorized - invalid or missing API key
+    action: Verify API key in request headers; regenerate via portal if needed

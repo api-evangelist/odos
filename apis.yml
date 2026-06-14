@@ -1,0 +1,153 @@
+name: Odos
+description: >-
+  Odos is a DEX aggregator and smart order routing platform that uses a
+  sophisticated optimization algorithm to unify fragmented liquidity and
+  maximize the output of every trade. The platform scans 1050+ liquidity
+  pools across 15 EVM-compatible chains to find optimal swap routes while
+  accounting for gas costs. Since launching in 2022, Odos has facilitated
+  over $100B in transaction volume and served 3.2M+ unique wallets. Odos
+  provides REST APIs for token swap quotes, optimal routing, slippage
+  management, multi-token transaction execution, token pricing, and
+  liquidity zap operations.
+image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+url: https://raw.githubusercontent.com/api-evangelist/odos/refs/heads/main/apis.yml
+version: '0.19'
+created: '2026-06-14'
+modified: '2026-06-14'
+specificationVersion: '0.19'
+tags:
+  - DEX
+  - Aggregator
+  - DeFi
+  - Token Swaps
+  - Liquidity
+  - Routing
+  - Blockchain
+  - EVM
+  - Web3
+apis:
+  - name: Odos Smart Order Router API
+    description: >-
+      The Odos Smart Order Router (SOR) API provides REST endpoints for
+      obtaining optimal token swap quotes, assembling swap transaction data,
+      and executing multi-token swaps across 15 EVM-compatible blockchains.
+      The API aggregates liquidity from DEXs, AMMs, on-chain order books,
+      lending protocols, and private RFQ systems to maximize trade output
+      net of gas costs. Supports simple swaps, advanced market orders,
+      limit orders, and cross-chain swaps. SOC 2 Type II compliant.
+    image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+    humanURL: https://docs.odos.xyz/
+    baseURL: https://api.odos.xyz
+    tags:
+      - DEX Aggregator
+      - Token Swaps
+      - Liquidity Routing
+      - Quote
+      - Assemble
+      - Execute
+    properties:
+      - type: Documentation
+        url: https://docs.odos.xyz/
+      - type: OpenAPI
+        url: https://api.odos.xyz/sor/openapi.json
+      - type: Plans
+        url: https://raw.githubusercontent.com/api-evangelist/odos/refs/heads/main/plans/apis.yml
+      - type: RateLimits
+        url: https://raw.githubusercontent.com/api-evangelist/odos/refs/heads/main/rate-limits/apis.yml
+      - type: FinOps
+        url: https://raw.githubusercontent.com/api-evangelist/odos/refs/heads/main/finops/apis.yml
+    contact:
+      - FN: Odos Support
+        url: https://discord.gg/odos
+        email: ''
+  - name: Odos Token Pricing API
+    description: >-
+      The Odos Token Pricing API provides real-time price data for 100,000+
+      DeFi assets across 15 supported blockchain networks. The pricing data
+      is DeFi-native and sourced directly from on-chain liquidity, delivering
+      accurate pricing for tokens listed on decentralized exchanges. Available
+      as a standalone service through the QuickNode marketplace or as part
+      of the core Odos API offering.
+    image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+    humanURL: https://docs.odos.xyz/
+    baseURL: https://api.odos.xyz
+    tags:
+      - Token Pricing
+      - DeFi
+      - On-chain Data
+      - Price Feeds
+    properties:
+      - type: Documentation
+        url: https://docs.odos.xyz/
+      - type: Plans
+        url: https://raw.githubusercontent.com/api-evangelist/odos/refs/heads/main/plans/apis.yml
+      - type: RateLimits
+        url: https://raw.githubusercontent.com/api-evangelist/odos/refs/heads/main/rate-limits/apis.yml
+      - type: FinOps
+        url: https://raw.githubusercontent.com/api-evangelist/odos/refs/heads/main/finops/apis.yml
+    contact:
+      - FN: Odos Support
+        url: https://discord.gg/odos
+        email: ''
+  - name: Odos Liquidity Zaps API
+    description: >-
+      The Odos Liquidity Zaps API enables streamlined single-transaction
+      liquidity provisioning with optimized routing. Users can provide
+      liquidity to DeFi protocols using any token combination in a single
+      transaction, with Odos handling all intermediate swaps and routing
+      automatically to minimize costs and slippage.
+    image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+    humanURL: https://docs.odos.xyz/
+    baseURL: https://api.odos.xyz
+    tags:
+      - Liquidity
+      - Zaps
+      - DeFi
+      - AMM
+      - Liquidity Provision
+    properties:
+      - type: Documentation
+        url: https://docs.odos.xyz/
+      - type: Plans
+        url: https://raw.githubusercontent.com/api-evangelist/odos/refs/heads/main/plans/apis.yml
+      - type: RateLimits
+        url: https://raw.githubusercontent.com/api-evangelist/odos/refs/heads/main/rate-limits/apis.yml
+      - type: FinOps
+        url: https://raw.githubusercontent.com/api-evangelist/odos/refs/heads/main/finops/apis.yml
+    contact:
+      - FN: Odos Support
+        url: https://discord.gg/odos
+        email: ''
+common:
+  - type: Portal
+    url: https://enterprise.odos.xyz
+  - type: Documentation
+    url: https://docs.odos.xyz/
+  - type: About
+    url: https://docs.odos.xyz/home/about
+  - type: FAQ
+    url: https://docs.odos.xyz/resources/faq
+  - type: Plans
+    url: https://docs.odos.xyz/build/api_pricing
+  - type: Status
+    url: https://status.odos.xyz
+  - type: GitHub
+    url: https://github.com/odos-xyz
+  - type: Discord
+    url: https://discord.gg/odos
+  - type: Twitter
+    url: https://x.com/odosprotocol
+  - type: Telegram
+    url: https://t.me/OdosProtocol
+  - type: Forum
+    url: https://forum.odos.xyz
+  - type: App
+    url: https://app.odos.xyz
+  - type: MCP
+    url: https://github.com/odos-xyz/odos-mcp
+  - type: TermsOfService
+    url: https://docs.odos.xyz/resources/terms-of-service
+maintainers:
+  - FN: API Evangelist
+    url: https://apievangelist.com
+    email: info@apievangelist.com

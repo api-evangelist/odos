@@ -1,0 +1,115 @@
+name: Odos API Plans
+description: >-
+  Odos offers tiered API access plans ranging from a free public tier to
+  enterprise-grade custom arrangements. All plans provide access to the
+  Smart Order Router, token pricing, and liquidity zap endpoints. Paid
+  plans remove the protocol fee on swap volume and include analytics
+  dashboards, logs, and monetization capabilities for partners.
+url: https://docs.odos.xyz/build/api_pricing
+created: '2026-06-14'
+modified: '2026-06-14'
+plans:
+  - name: Public (Free)
+    description: >-
+      The free public tier provides basic access to the Odos Smart Order
+      Router and Token Pricing APIs with a protocol fee applied to swap
+      volume. Suitable for individual developers and low-volume integrations.
+      API key issued automatically upon portal registration.
+    url: https://docs.odos.xyz/build/api_pricing
+    price: 0.00
+    currency: USD
+    unit: month
+    rateLimits:
+      - name: Requests Per Second
+        limit: 1
+        unit: second
+      - name: Monthly Requests
+        limit: 20000
+        unit: month
+    features:
+      - Smart Order Router
+      - Token Pricing API
+      - API Key via Portal
+      - Basic Rate Limiting
+    fees:
+      - type: Protocol Fee on Swap Volume
+        amount: 3
+        unit: basis points
+  - name: Builder
+    description: >-
+      The Builder plan is designed for developers and small teams building
+      DeFi applications on top of Odos. Removes the protocol fee on swaps,
+      provides an analytics dashboard, request logs, swap endpoint with
+      calldata, and the ability to monetize via partner fees with an 80/20
+      revenue split.
+    url: https://docs.odos.xyz/build/api_pricing
+    price: 299.00
+    currency: USD
+    unit: month
+    rateLimits:
+      - name: Requests Per Second
+        limit: 10
+        unit: second
+      - name: Monthly Requests
+        limit: 3000000
+        unit: month
+    features:
+      - Smart Order Router
+      - Token Pricing API
+      - Analytics Dashboard
+      - Request Logs
+      - Swap Endpoint with Calldata
+      - Partner Monetization (80% revenue share)
+      - No Protocol Fee on Swaps
+  - name: Scale
+    description: >-
+      The Scale plan extends the Builder plan with higher throughput and
+      monthly usage limits. Designed for production applications with
+      significant trading volume requiring more requests per month while
+      maintaining the same rate per second as Builder.
+    url: https://docs.odos.xyz/build/api_pricing
+    price: 449.00
+    currency: USD
+    unit: month
+    rateLimits:
+      - name: Requests Per Second
+        limit: 10
+        unit: second
+      - name: Monthly Requests
+        limit: 5000000
+        unit: month
+    features:
+      - All Builder Features
+      - Higher Monthly Usage (5M requests)
+      - Analytics Dashboard
+      - Request Logs
+      - Swap Endpoint with Calldata
+      - Partner Monetization (80% revenue share)
+      - No Protocol Fee on Swaps
+  - name: Enterprise
+    description: >-
+      The Enterprise plan provides fully customizable infrastructure with
+      custom rate limits, dedicated support, custom latency SLAs, custom
+      fee structures, and advanced analytics. Designed for high-volume
+      trading firms, large dApps, and institutional integrators requiring
+      tailored arrangements. Contact the Odos team via Discord for pricing.
+    url: https://docs.odos.xyz/build/api_pricing
+    price: 0.00
+    currency: USD
+    unit: custom
+    rateLimits:
+      - name: Requests Per Second
+        limit: 0
+        unit: custom
+      - name: Monthly Requests
+        limit: 0
+        unit: custom
+    features:
+      - Custom Rate Limits
+      - Custom Monthly Usage
+      - Custom Fee Structure
+      - Dedicated Support
+      - Custom Latency SLAs
+      - Advanced Analytics
+      - All Builder/Scale Features
+      - Partner Monetization
