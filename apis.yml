@@ -139,7 +139,7 @@ common:
     url: https://x.com/odosprotocol
   - type: Telegram
     url: https://t.me/OdosProtocol
-  - type: Forum
+  - type: Forums
     url: https://forum.odos.xyz
   - type: App
     url: https://app.odos.xyz
