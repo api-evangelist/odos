@@ -119,6 +119,8 @@ apis:
         url: https://discord.gg/odos
         email: ''
 common:
+  - type: AgenticAccess
+    url: agentic-access/odos-agentic-access.yml
   - type: DomainSecurity
     url: security/odos-domain-security.yml
   - type: Portal
