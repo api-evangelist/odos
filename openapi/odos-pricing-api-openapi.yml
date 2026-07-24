@@ -1,0 +1,237 @@
+openapi: 3.1.0
+info:
+  title: Odos Information Pricing API
+  description: "<!-- ## Documentation\n\nFor more detailed documentation, visit [https://docs.odos.xyz](https://docs.odos.xyz)\n\n## Status\n\nService availability can be found on our status page: [https://status.odos.xyz](https://status.odos.xyz)\n -->"
+  version: 3.0.0
+  x-logo:
+    url: https://assets.odos.xyz/logo_orange_transparent.png
+  termsOfService: https://docs.odos.xyz/policy/terms-of-use/
+tags:
+- name: Pricing
+  description: Query Odos' price for any token with liquidity
+  externalDocs:
+    description: Quick Start Guide
+    url: https://docs.odos.xyz/api/quickstart/pricing
+paths:
+  /pricing/currencies:
+    get:
+      tags:
+      - Pricing
+      summary: Get list of available currencies
+      description: Get list of available currencies and exchange rates for token prices
+      operationId: get_currencies_pricing_currencies_get
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CurrencyInfoList'
+  /pricing/token/{chain_id}/{token_addr}:
+    get:
+      tags:
+      - Pricing
+      summary: Get single token price
+      description: Get the token price info for a given chain and address. Price will be null if asset is valid but price is not available
+      operationId: get_token_price_pricing_token__chain_id___token_addr__get
+      parameters:
+      - name: chain_id
+        in: path
+        required: true
+        schema:
+          type: integer
+          title: Chain ID of token
+      - name: token_addr
+        in: path
+        required: true
+        schema:
+          type: string
+          pattern: ^0x([a-fA-F0-9]){40}$
+          title: Address of token to get price for
+      - name: currencyId
+        in: query
+        required: false
+        schema:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Optional Currency ID (default is USD)
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TokenPrice'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /pricing/token/{chain_id}:
+    get:
+      tags:
+      - Pricing
+      summary: Get all chain whitelisted token prices, unless list is specified
+      description: Get all of the whitelisted token prices on an Odos supported chain
+      operationId: get_chain_token_prices_pricing_token__chain_id__get
+      parameters:
+      - name: chain_id
+        in: path
+        required: true
+        schema:
+          type: integer
+          title: Chain ID of token
+      - name: token_addresses
+        in: query
+        required: false
+        schema:
+          type: array
+          items:
+            type: string
+          title: list of token addresses to get price for
+          default: []
+      - name: currencyId
+        in: query
+        required: false
+        schema:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Optional Currency ID (default is USD)
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ChainTokenPriceMap'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+components:
+  schemas:
+    ValidationError:
+      properties:
+        loc:
+          items:
+            anyOf:
+            - type: string
+            - type: integer
+          type: array
+          title: Location
+        msg:
+          type: string
+          title: Message
+        type:
+          type: string
+          title: Error Type
+      type: object
+      required:
+      - loc
+      - msg
+      - type
+      title: ValidationError
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
+      type: object
+      title: HTTPValidationError
+    ChainTokenPriceMap:
+      properties:
+        deprecated:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Deprecated
+        traceId:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Traceid
+        currencyId:
+          type: string
+          title: Currencyid
+        tokenPrices:
+          additionalProperties:
+            anyOf:
+            - type: number
+            - type: 'null'
+          type: object
+          title: Tokenprices
+      type: object
+      required:
+      - currencyId
+      - tokenPrices
+      title: ChainTokenPriceMap
+      description: "All token prices for a given chain\n\nAttributes:\n    currencyId (str): price service id of the currency\n    tokenPrices (dict): Token and price"
+    CurrencyInfoList:
+      properties:
+        deprecated:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Deprecated
+        traceId:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Traceid
+        currencies:
+          items:
+            $ref: '#/components/schemas/CurrencyInfo'
+          type: array
+          title: Currencies
+      type: object
+      required:
+      - currencies
+      title: CurrencyInfoList
+      description: "Schema for list of supported currency info\n\nAttributes:\n    currencies (List[CurrencyInfo]): list of supported currency info entries"
+    CurrencyInfo:
+      properties:
+        id:
+          type: string
+          title: Id
+        name:
+          type: string
+          title: Name
+      type: object
+      required:
+      - id
+      - name
+      title: CurrencyInfo
+      description: "Schema for supported currency info\n\nAttributes:TokenPrice\n    id (str): price service id of the currency\n    name (str): name of currency corresponding to ID"
+    TokenPrice:
+      properties:
+        deprecated:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Deprecated
+        traceId:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Traceid
+        currencyId:
+          type: string
+          title: Currencyid
+        price:
+          anyOf:
+          - type: number
+          - type: 'null'
+          title: Price
+      type: object
+      required:
+      - currencyId
+      - price
+      title: TokenPrice
+      description: "Schema for basic token price structure\n\nAttributes:\n    currencyId (str): price service id of the currency\n    price (Optional[float]): fiat price of asset if it is available"

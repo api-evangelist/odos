@@ -1,0 +1,506 @@
+openapi: 3.1.0
+info:
+  title: Odos Information API
+  description: "<!-- ## Documentation\n\nFor more detailed documentation, visit [https://docs.odos.xyz](https://docs.odos.xyz)\n\n## Status\n\nService availability can be found on our status page: [https://status.odos.xyz](https://status.odos.xyz)\n -->"
+  version: 3.0.0
+  x-logo:
+    url: https://assets.odos.xyz/logo_orange_transparent.png
+  termsOfService: https://docs.odos.xyz/policy/terms-of-use/
+tags:
+- name: Information
+  description: General information about the Odos service offerings
+paths:
+  /info/chains:
+    get:
+      tags:
+      - Information
+      summary: Supported Blockchains
+      description: All Chain IDs supported by Odos.
+      operationId: get_chain_ids_info_chains_get
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SupportedChains'
+  /info/contract-info/{version}/{chain_id}:
+    get:
+      tags:
+      - Information
+      summary: Odos contract info
+      description: 'All relevant contract information for a given chain and router version.
+
+
+        ## Response Body
+
+
+        | Parameter | Description |
+
+        | --- | --- |
+
+        | `chainId` | ID of the chain this information is relevant for. Can be used to confirm input and output chains match. |
+
+        | `routerAddress` | Address of the Odos Router Contract on the given chain and router version |
+
+        | `executorAddress` | Address of the Odos Executor Contract currently in use on the given chain and router version. This contract is updated frequently to add support for new liquidity sources. |
+
+        | `routerAbi` | ABI of the router |
+
+        | `erc20Abi` | ERC20 Token ABI |'
+      operationId: get_contract_info_info_contract_info__version___chain_id__get
+      parameters:
+      - name: version
+        in: path
+        required: true
+        schema:
+          $ref: '#/components/schemas/OdosApiVersion'
+      - name: chain_id
+        in: path
+        required: true
+        schema:
+          type: integer
+          title: Chain Id
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ContractInfo'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /info/router/{version}/{chain_id}:
+    get:
+      tags:
+      - Information
+      summary: Address of the Odos router for given chain and version
+      description: Address of Odos router contract that a swap path must be sent to.
+      operationId: get_router_info_router__version___chain_id__get
+      parameters:
+      - name: version
+        in: path
+        required: true
+        schema:
+          $ref: '#/components/schemas/OdosApiVersion'
+      - name: chain_id
+        in: path
+        required: true
+        schema:
+          type: integer
+          title: Chain Id
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RouterAddress'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /info/executor/{version}/{chain_id}:
+    get:
+      tags:
+      - Information
+      summary: Address of the Odos executor for given chain and version
+      description: Get Odos Executor address for chain
+      operationId: get_executor_info_executor__version___chain_id__get
+      parameters:
+      - name: version
+        in: path
+        required: true
+        schema:
+          $ref: '#/components/schemas/OdosApiVersion'
+      - name: chain_id
+        in: path
+        required: true
+        schema:
+          type: integer
+          title: Chain Id
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExecutorAddress'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /info/liquidity-sources/{chain_id}:
+    get:
+      tags:
+      - Information
+      summary: Liquidity sources supported by Odos
+      description: 'List of all liquidity sources. This list can be used to filter out unwanted or problematic liquidity pools.
+
+
+        Please reach out if there is a liquidity source that we don''t support. We pride ourselves in our DeFi coverage.'
+      operationId: get_liquidity_sources_info_liquidity_sources__chain_id__get
+      parameters:
+      - name: chain_id
+        in: path
+        required: true
+        schema:
+          type: integer
+          title: Chain Id
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LiquiditySources'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /info/market-intelligence:
+    get:
+      tags:
+      - Information
+      summary: RWA market intelligence
+      description: Aggregated market intelligence for supported RWA assets.
+      operationId: get_market_intelligence_info_market_intelligence_get
+      parameters:
+      - name: chainId
+        in: query
+        required: false
+        schema:
+          anyOf:
+          - type: integer
+            exclusiveMinimum: 0
+          - type: 'null'
+          title: Chainid
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: true
+                title: Response Get Market Intelligence Info Market Intelligence Get
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /info/tokens/{chain_id}:
+    get:
+      tags:
+      - Information
+      summary: Tokens supported by Odos
+      description: 'All of the supported ERC-20 tokens that Odos uses for swaps for input, output, and routing tokens. These tokens have been manually audited to ensure they will work with Odos. Custom tokens can also be used with Odos, but there is no guarantee Odos will find a valid path.
+
+
+        Please reach out if there is a token that should be added to Odos'' natively supported tokens.'
+      operationId: get_token_map_info_tokens__chain_id__get
+      parameters:
+      - name: chain_id
+        in: path
+        required: true
+        schema:
+          type: integer
+          title: Chain Id
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TokenMap'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /info/current-block/{chain_id}:
+    get:
+      tags:
+      - Information
+      summary: Get the current block number for Odos on given chain
+      description: Use this endpoint to monitor the current block number Odos is basing its quotes off of.
+      operationId: get_current_block_info_current_block__chain_id__get
+      parameters:
+      - name: chain_id
+        in: path
+        required: true
+        schema:
+          type: integer
+          title: Chain Id
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CurrentBlockNumber'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+components:
+  schemas:
+    SupportedChains:
+      properties:
+        deprecated:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Deprecated
+        traceId:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Traceid
+        chains:
+          items:
+            type: integer
+          type: array
+          title: Chains
+      type: object
+      required:
+      - chains
+      title: SupportedChains
+      description: Supported Chains schema
+    ValidationError:
+      properties:
+        loc:
+          items:
+            anyOf:
+            - type: string
+            - type: integer
+          type: array
+          title: Location
+        msg:
+          type: string
+          title: Message
+        type:
+          type: string
+          title: Error Type
+      type: object
+      required:
+      - loc
+      - msg
+      - type
+      title: ValidationError
+    CurrentBlockNumber:
+      properties:
+        deprecated:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Deprecated
+        traceId:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Traceid
+        blockNumber:
+          type: integer
+          title: Blocknumber
+      type: object
+      required:
+      - blockNumber
+      title: CurrentBlockNumber
+      description: "Schema for current block number response\n\nAttributes:\n    blockNumber (int): current odos block number"
+    OdosApiVersion:
+      type: string
+      enum:
+      - v3
+      - v2
+      title: OdosApiVersion
+      description: Odos API supported versions
+    ContractInfo:
+      properties:
+        deprecated:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Deprecated
+        traceId:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Traceid
+        chainId:
+          type: integer
+          title: Chainid
+        routerAddress:
+          type: string
+          title: Routeraddress
+        executorAddress:
+          type: string
+          title: Executoraddress
+        routerAbi:
+          anyOf:
+          - additionalProperties: true
+            type: object
+          - type: 'null'
+          title: Routerabi
+        erc20Abi:
+          anyOf:
+          - additionalProperties: true
+            type: object
+          - type: 'null'
+          title: Erc20Abi
+      type: object
+      required:
+      - chainId
+      - routerAddress
+      - executorAddress
+      - routerAbi
+      - erc20Abi
+      title: ContractInfo
+      description: Odos Contract Info Schema
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
+      type: object
+      title: HTTPValidationError
+    TokenMap:
+      properties:
+        deprecated:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Deprecated
+        traceId:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Traceid
+        tokenMap:
+          additionalProperties:
+            $ref: '#/components/schemas/Token'
+          type: object
+          title: Tokenmap
+      type: object
+      required:
+      - tokenMap
+      title: TokenMap
+      description: Token Map Schema
+    RouterAddress:
+      properties:
+        deprecated:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Deprecated
+        traceId:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Traceid
+        address:
+          type: string
+          pattern: ^0x([a-fA-F0-9]){40}$
+          title: Address
+          description: Address of Odos Router
+      type: object
+      required:
+      - address
+      title: RouterAddress
+      description: Odos Router Address schema
+    ExecutorAddress:
+      properties:
+        deprecated:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Deprecated
+        traceId:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Traceid
+        address:
+          type: string
+          pattern: ^0x([a-fA-F0-9]){40}$
+          title: Address
+          description: Address of Odos Executor
+      type: object
+      required:
+      - address
+      title: ExecutorAddress
+      description: Odos Executor Address schema
+    LiquiditySources:
+      properties:
+        deprecated:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Deprecated
+        traceId:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Traceid
+        sources:
+          items:
+            type: string
+          type: array
+          title: Sources
+      type: object
+      required:
+      - sources
+      title: LiquiditySources
+      description: Odos liquidity sources schema
+    Token:
+      properties:
+        name:
+          type: string
+          title: Name
+        symbol:
+          type: string
+          title: Symbol
+        decimals:
+          type: integer
+          title: Decimals
+        assetId:
+          type: string
+          title: Assetid
+        assetType:
+          type: string
+          title: Assettype
+        protocolId:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Protocolid
+        isRebasing:
+          type: boolean
+          title: Isrebasing
+      type: object
+      required:
+      - name
+      - symbol
+      - decimals
+      - assetId
+      - assetType
+      - protocolId
+      - isRebasing
+      title: Token
+      description: Token Schema
