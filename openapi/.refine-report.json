@@ -1,0 +1,18 @@
+{
+  "provider": "odos",
+  "sources": [
+    "odos-information-api-openapi.yml",
+    "odos-pricing-api-openapi.yml",
+    "odos-smart-order-routing-api-openapi.yml"
+  ],
+  "outputs": [
+    "odos-information-api-openapi.yml",
+    "odos-pricing-api-openapi.yml",
+    "odos-smart-order-routing-api-openapi.yml"
+  ],
+  "archived": [],
+  "errors": [],
+  "warnings": [],
+  "notes": [],
+  "skipped": []
+}
