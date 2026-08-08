@@ -180,7 +180,7 @@ common:
     url: https://forum.odos.xyz
   - type: App
     url: https://app.odos.xyz
-  - type: MCP
+  - type: Documentation
     url: https://github.com/odos-xyz/odos-mcp
   - type: TermsOfService
     url: https://docs.odos.xyz/resources/terms-of-service
