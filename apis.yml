@@ -26,7 +26,7 @@ url: https://raw.githubusercontent.com/api-evangelist/odos/refs/heads/main/apis.
 version: '0.19'
 created: '2026-06-14'
 modified: '2026-06-14'
-specificationVersion: '0.19'
+specificationVersion: '0.23'
 tags:
   - DEX
   - Aggregator
