@@ -1,0 +1,85 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Odos Information Pricing API",
+    "version": "3.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Pricing",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get list of available currencies",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/pricing/currencies"
+          },
+          "docs": "Get list of available currencies and exchange rates for token prices"
+        },
+        {
+          "info": {
+            "name": "Get single token price",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/pricing/token/:chain_id/:token_addr",
+            "params": [
+              {
+                "name": "chain_id",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "token_addr",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "currencyId",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Get the token price info for a given chain and address. Price will be null if asset is valid but price is not available"
+        },
+        {
+          "info": {
+            "name": "Get all chain whitelisted token prices, unless list is specified",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/pricing/token/:chain_id",
+            "params": [
+              {
+                "name": "chain_id",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "token_addresses",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "currencyId",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Get all of the whitelisted token prices on an Odos supported chain"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

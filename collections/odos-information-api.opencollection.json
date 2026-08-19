@@ -1,0 +1,170 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Odos Information API",
+    "version": "3.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Information",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Supported Blockchains",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/info/chains"
+          },
+          "docs": "All Chain IDs supported by Odos."
+        },
+        {
+          "info": {
+            "name": "Odos contract info",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/info/contract-info/:version/:chain_id",
+            "params": [
+              {
+                "name": "version",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "chain_id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "All relevant contract information for a given chain and router version.\n\n## Response Body\n\n| Parameter | Description |\n| --- | --- |\n| `chainId` | ID of the chain this information is relevant for. Can be used to confirm input and output chains match. |\n| `routerAddress` | Address of the Odos Router Contract on the given chain and router version |\n| `executorAddress` | Address of the Odos Executor Contract currently in use on the given chain and router version. This contract is updated frequently"
+        },
+        {
+          "info": {
+            "name": "Address of the Odos router for given chain and version",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/info/router/:version/:chain_id",
+            "params": [
+              {
+                "name": "version",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "chain_id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Address of Odos router contract that a swap path must be sent to."
+        },
+        {
+          "info": {
+            "name": "Address of the Odos executor for given chain and version",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/info/executor/:version/:chain_id",
+            "params": [
+              {
+                "name": "version",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "chain_id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Get Odos Executor address for chain"
+        },
+        {
+          "info": {
+            "name": "Liquidity sources supported by Odos",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/info/liquidity-sources/:chain_id",
+            "params": [
+              {
+                "name": "chain_id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "List of all liquidity sources. This list can be used to filter out unwanted or problematic liquidity pools.\n\nPlease reach out if there is a liquidity source that we don't support. We pride ourselves in our DeFi coverage."
+        },
+        {
+          "info": {
+            "name": "RWA market intelligence",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/info/market-intelligence",
+            "params": [
+              {
+                "name": "chainId",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Aggregated market intelligence for supported RWA assets."
+        },
+        {
+          "info": {
+            "name": "Tokens supported by Odos",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/info/tokens/:chain_id",
+            "params": [
+              {
+                "name": "chain_id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "All of the supported ERC-20 tokens that Odos uses for swaps for input, output, and routing tokens. These tokens have been manually audited to ensure they will work with Odos. Custom tokens can also be used with Odos, but there is no guarantee Odos will find a valid path.\n\nPlease reach out if there is a token that should be added to Odos' natively supported tokens."
+        },
+        {
+          "info": {
+            "name": "Get the current block number for Odos on given chain",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/info/current-block/:chain_id",
+            "params": [
+              {
+                "name": "chain_id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Use this endpoint to monitor the current block number Odos is basing its quotes off of."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

@@ -1,0 +1,108 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Odos Information Smart Order Routing API",
+    "version": "3.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Smart Order Routing",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Generate Odos Quote V3 + Assembly",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/sor/swap/v3",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Quote a path for swapping between assets atomically. This can be used programmatically to check for a quoted price of a given trade without needing to wait for an assembled transaction to be created and provided. It can also be used to anonymously check quotes.\n\n## Request Body\n\n| Parameter | Description | Required |\n| --- | ------------- | --- |\n| `chainId` | Chain ID to use for quote generation. A list of valid chains can be retrieved from [`info/chains`](#/Info/get_chain_ids_info_chains_get)."
+        },
+        {
+          "info": {
+            "name": "Generate Odos Quote",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/sor/quote/v3",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Quote a path for swapping between assets atomically. This can be used programmatically to check for a quoted price of a given trade without needing to wait for an assembled transaction to be created and provided. It can also be used to anonymously check quotes.\n\n## Request Body\n\n| Parameter | Description | Required |\n| --- | ------------- | --- |\n| `chainId` | Chain ID to use for quote generation. A list of valid chains can be retrieved from [`info/chains`](#/Info/get_chain_ids_info_chains_get)."
+        },
+        {
+          "info": {
+            "name": "Generate Odos Zap Quote",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/sor/quote/v3/zap",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Quote a path for zapping into or out of liquidity positions atomically. Input tokens can be both regular ERC-20 tokens and liquidity pool tokens. Outputs can be regular ERC-20 tokens or liquidity pool tokens.\n\n## Request Body\n\n| Parameter | Description | Required |\n| --- | ------------- | --- |\n| `chainId` | Chain ID to use for quote generation. A list of valid chains can be retrieved from [`info/chains`](#/Info/get_chain_ids_info_chains_get). | Yes |\n| `inputTokens` | Input tokens and amounts f"
+        },
+        {
+          "info": {
+            "name": "Generate Odos Quote",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/sor/quote/v2",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Quote a path for swapping between assets atomically. This can be used programmatically to check for a quoted price of a given trade without needing to wait for an assembled transaction to be created and provided. It can also be used to anonymously check quotes.\n\n## Request Body\n\n| Parameter | Description | Required |\n| --- | ------------- | --- |\n| `chainId` | Chain ID to use for quote generation. A list of valid chains can be retrieved from [`info/chains`](#/Info/get_chain_ids_info_chains_get)."
+        },
+        {
+          "info": {
+            "name": "Generate Odos Zap Quote",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/sor/quote/v2/zap",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Quote a path for zapping into or out of liquidity positions atomically. Input tokens can be both regular ERC-20 tokens and liquidity pool tokens. Outputs can be regular ERC-20 tokens or liquidity pool tokens.\n\n## Request Body\n\n| Parameter | Description | Required |\n| --- | ------------- | --- |\n| `chainId` | Chain ID to use for quote generation. A list of valid chains can be retrieved from [`info/chains`](#/Info/get_chain_ids_info_chains_get). | Yes |\n| `inputTokens` | Input tokens and amounts f"
+        },
+        {
+          "info": {
+            "name": "Assemble Odos quote into transaction",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/sor/assemble",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Provide valid call data for a given quoted path. This is called after calling the `sor/quote` endpoint and receiving back a quote and `pathID`.\n\nA quote only lasts for 60 seconds. If it is not assembled in that time, it will not be available to assemble, and the path will need to be quoted again.\n\nUse the information provided by this endpoint directly. Do not try to modify the call data. You will make a mistake and you will end up losing money. **We will not provide support for users modifying t"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}
