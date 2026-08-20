@@ -50,6 +50,11 @@ apis:
   tags:
   - Token Pricing
   - DeFi
+  - On-Chain Data
+  - Price Feeds
+  tags_raw:
+  - Token Pricing
+  - DeFi
   - On-chain Data
   - Price Feeds
   properties:
