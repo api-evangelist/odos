@@ -1,7 +1,7 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
-  title: Odos Information Smart Order Routing API
-  description: "<!-- ## Documentation\n\nFor more detailed documentation, visit [https://docs.odos.xyz](https://docs.odos.xyz)\n\n## Status\n\nService availability can be found on our status page: [https://status.odos.xyz](https://status.odos.xyz)\n -->"
+  title: Odos Smart Order Routing API
+  description: ''
   version: 3.0.0
   x-logo:
     url: https://assets.odos.xyz/logo_orange_transparent.png
@@ -18,7 +18,7 @@ paths:
       tags:
       - Smart Order Routing
       summary: Generate Odos Quote V3 + Assembly
-      description: "Quote a path for swapping between assets atomically. This can be used programmatically to check for a quoted price of a given trade without needing to wait for an assembled transaction to be created and provided. It can also be used to anonymously check quotes.\n\n## Request Body\n\n| Parameter | Description | Required |\n| --- | ------------- | --- |\n| `chainId` | Chain ID to use for quote generation. A list of valid chains can be retrieved from [`info/chains`](#/Info/get_chain_ids_info_chains_get). | Yes |\n| `inputTokens` | Input tokens and amounts for quote | Yes |\n| `outputTokens`| Output tokens and proportions for quote | Yes |\n| `gasPrice` | Gas price to use for path generation. This price directly affects the path computation. If no gas price is provided, our default price from our frontend will be used. | No |\n| `userAddr` | Address of the wallet executing the swap. If no wallet is provided, the quote cannot be turned into a path. This can be viewed as informational only. | No |\n| `slippageLimitPercent` | Slippage percent to use for checking if the path is valid. Float. Example: to set slippage to 0.5% send `0.5`. If 1% is desired, send `1`. If not provided, slippage will be set `0.3`.  | No |\n| `sourceBlacklist` | List of liquidity providers that are not to be used for the swap path. A list of all liquidity providers for a given chain can be retrieved from [`info/liquidity-sources/{chain_id}`](#/Info/liquidity_sources_info_liquidity_sources__chain_id__get) | No |\n| `sourceWhitelist` | List of liquidity providers to exclusively use for the swap path. A list of all liquidity providers for a given chain can be retrieved from [`info/liquidity-sources/{chain_id}`](#/Info/liquidity_sources_info_liquidity_sources__chain_id__get) | No |\n| `poolBlacklist` | List of pool ids that are not to be used for the swap path | No |\n| `pathVizImage` | Return a Base64 encoded SVG of path visualization image for display on web frontends | No |\n| `pathVizImageConfig` | Optional customization parameters for generated path viz image | No |\n| `disableRFQs` | Disable all exchanges that qualify as RFQs with centralized API dependencies and time-sensitive quotes or potential user address restrictions. Default is true. | No |\n| `referralCode` | Code for registering your usage with Odos and receiving partner specific benefits. [Referral Code Documentation](https://docs.odos.xyz/product/sor/v2/referral-code) | No |\n| `compact` | Use Odos V2 compact call data for transaction, defaults to `true` | No |\n| `likeAsset` | If input and output tokens are all the same asset type (ex: USD stable coins), only route through like assets for decreased slippage. Defaults to `false` | No |\n| `simple` | If a less complicated quote and/or a quicker response time is desired, this flag can be set. Defaults to `false` | No |\n\n### inputTokens\n\n| Parameter | Description | Required |\n| --- | --- | --- |\n| `tokenAddress` | Address of the token to swap from. This should be a [checksummed address](https://eips.ethereum.org/EIPS/eip-55). | Yes |\n| `amount` | Amount of the token in fixed precision. String | Yes |\n\n\n### outputTokens\n\n| Parameter | Description | Required |\n| --- | --- | --- |\n| `tokenAddress` | Address of the token to swap to. This should be a [checksummed address](https://eips.ethereum.org/EIPS/eip-55). | Yes |\n| `proportion` | Percent of token to output. For a single swap, this is set to 1. Float. | Yes |\n\n### pathVizImageConfig\n\n| Parameter | Description | Required |\n| --- | ------------- | --- |\n| `linkColors` | List of hex codes to generate color spectrum for liquidity sources in path visualization | No |\n| `nodeColor` | Hex code for setting the color of token nodes in path visualization | No |\n| `nodeTextColor` | Hex code to set the color of token symbol text on token nodes | No |\n| `legendTextColor` | Hex code to set the color of the visualization legend text | No |\n| `width` | Set a custom width proportion for the visualization | No |\n| `height` | Set a custom height proportion for the visualization | No |\n\n#### Example Full Config Response:\n\n```json\n{\n  \"linkColors\": [\"#123456\"],\n  \"nodeColor\": \"#1BEEF1\",\n  \"nodeTextColor\": \"#FFFFFF\",\n  \"legendTextColor\": \"#000000\",\n  \"width\": 1200,\n  \"height\": 800\n}\n```\n\n#### Basic integration:\n\nSet the `src` attribute of an `<img />` HTML tag to the `pathVizImage` text field of the quote response\n\n\n## Response Body\n\n| Parameter | Description |\n| --- | --- |\n| `deprecated` | If the endpoint or any part of the request is deprecated, this field will be populated with a message. This field is omitted if there is nothing to notify on. |\n| `pathId` | ID of the path used for asking for an assembled quote |\n| `blockNumber` | Block number the quote was generated for |\n| `gasEstimate` | A very naive gas estimate |\n| `gasEstimateValue` | USD Value of the `gasEstimate` |\n| `dataGasEstimate` | Used for Layer 2 chains |\n| `gweiPerGas` | Amount of gWei per gas unit |\n| `inTokens` | A list of token addresses and amounts |\n| `inAmounts` | A list of input token amounts |\n| `outTokens` | A list of token addresses and amounts |\n| `outAmounts` | A list of output token amounts |\n| `netOutValue` | USD value of the sum of the output tokens after gas |\n| `outValues` | A list of the output values of the given output tokens. In the same order as the `outputTokens` list |\n| `priceImpact` | Percent decrease in the realized price of the path from the initial price of the path before the swap is executed. |\n| `percentDiff` | Percent difference between the value of all input tokens and the value of all output tokens (as determined by the Odos pricing service) |\n| `partnerFeePercent` | Percent fee taken by partner referral code given. Fee is already deducted from quote |\n| `pathVizImage` | Base64 encoded image ready to be used within a UI |"
+      description: Quote a path for swapping between assets atomically.
       operationId: swap_v3_sor_swap_v3_post
       requestBody:
         content:
@@ -44,7 +44,7 @@ paths:
       tags:
       - Smart Order Routing
       summary: Generate Odos Quote
-      description: "Quote a path for swapping between assets atomically. This can be used programmatically to check for a quoted price of a given trade without needing to wait for an assembled transaction to be created and provided. It can also be used to anonymously check quotes.\n\n## Request Body\n\n| Parameter | Description | Required |\n| --- | ------------- | --- |\n| `chainId` | Chain ID to use for quote generation. A list of valid chains can be retrieved from [`info/chains`](#/Info/get_chain_ids_info_chains_get). | Yes |\n| `inputTokens` | Input tokens and amounts for quote | Yes |\n| `outputTokens`| Output tokens and proportions for quote | Yes |\n| `gasPrice` | Gas price to use for path generation. This price directly affects the path computation. If no gas price is provided, our default price from our frontend will be used. | No |\n| `userAddr` | Address of the wallet executing the swap. If no wallet is provided, the quote cannot be turned into a path. This can be viewed as informational only. | No |\n| `slippageLimitPercent` | Slippage percent to use for checking if the path is valid. Float. Example: to set slippage to 0.5% send `0.5`. If 1% is desired, send `1`. If not provided, slippage will be set `0.3`.  | No |\n| `sourceBlacklist` | List of liquidity providers that are not to be used for the swap path. A list of all liquidity providers for a given chain can be retrieved from [`info/liquidity-sources/{chain_id}`](#/Info/liquidity_sources_info_liquidity_sources__chain_id__get) | No |\n| `sourceWhitelist` | List of liquidity providers to exclusively use for the swap path. A list of all liquidity providers for a given chain can be retrieved from [`info/liquidity-sources/{chain_id}`](#/Info/liquidity_sources_info_liquidity_sources__chain_id__get) | No |\n| `poolBlacklist` | List of pool ids that are not to be used for the swap path | No |\n| `pathVizImage` | Return a Base64 encoded SVG of path visualization image for display on web frontends | No |\n| `pathVizImageConfig` | Optional customization parameters for generated path viz image | No |\n| `disableRFQs` | Disable all exchanges that qualify as RFQs with centralized API dependencies and time-sensitive quotes or potential user address restrictions. Default is true. | No |\n| `referralCode` | Code for registering your usage with Odos and receiving partner specific benefits. [Referral Code Documentation](https://docs.odos.xyz/product/sor/v2/referral-code) | No |\n| `compact` | Use Odos V2 compact call data for transaction, defaults to `true` | No |\n| `likeAsset` | If input and output tokens are all the same asset type (ex: USD stable coins), only route through like assets for decreased slippage. Defaults to `false` | No |\n| `simple` | If a less complicated quote and/or a quicker response time is desired, this flag can be set. Defaults to `false` | No |\n\n### inputTokens\n\n| Parameter | Description | Required |\n| --- | --- | --- |\n| `tokenAddress` | Address of the token to swap from. This should be a [checksummed address](https://eips.ethereum.org/EIPS/eip-55). | Yes |\n| `amount` | Amount of the token in fixed precision. String | Yes |\n\n\n### outputTokens\n\n| Parameter | Description | Required |\n| --- | --- | --- |\n| `tokenAddress` | Address of the token to swap to. This should be a [checksummed address](https://eips.ethereum.org/EIPS/eip-55). | Yes |\n| `proportion` | Percent of token to output. For a single swap, this is set to 1. Float. | Yes |\n\n### pathVizImageConfig\n\n| Parameter | Description | Required |\n| --- | ------------- | --- |\n| `linkColors` | List of hex codes to generate color spectrum for liquidity sources in path visualization | No |\n| `nodeColor` | Hex code for setting the color of token nodes in path visualization | No |\n| `nodeTextColor` | Hex code to set the color of token symbol text on token nodes | No |\n| `legendTextColor` | Hex code to set the color of the visualization legend text | No |\n| `width` | Set a custom width proportion for the visualization | No |\n| `height` | Set a custom height proportion for the visualization | No |\n\n#### Example Full Config Response:\n\n```json\n{\n  \"linkColors\": [\"#123456\"],\n  \"nodeColor\": \"#1BEEF1\",\n  \"nodeTextColor\": \"#FFFFFF\",\n  \"legendTextColor\": \"#000000\",\n  \"width\": 1200,\n  \"height\": 800\n}\n```\n\n#### Basic integration:\n\nSet the `src` attribute of an `<img />` HTML tag to the `pathVizImage` text field of the quote response\n\n\n## Response Body\n\n| Parameter | Description |\n| --- | --- |\n| `deprecated` | If the endpoint or any part of the request is deprecated, this field will be populated with a message. This field is omitted if there is nothing to notify on. |\n| `pathId` | ID of the path used for asking for an assembled quote |\n| `blockNumber` | Block number the quote was generated for |\n| `gasEstimate` | A very naive gas estimate |\n| `gasEstimateValue` | USD Value of the `gasEstimate` |\n| `dataGasEstimate` | Used for Layer 2 chains |\n| `gweiPerGas` | Amount of gWei per gas unit |\n| `inTokens` | A list of token addresses and amounts |\n| `inAmounts` | A list of input token amounts |\n| `outTokens` | A list of token addresses and amounts |\n| `outAmounts` | A list of output token amounts |\n| `netOutValue` | USD value of the sum of the output tokens after gas |\n| `outValues` | A list of the output values of the given output tokens. In the same order as the `outputTokens` list |\n| `priceImpact` | Percent decrease in the realized price of the path from the initial price of the path before the swap is executed. |\n| `percentDiff` | Percent difference between the value of all input tokens and the value of all output tokens (as determined by the Odos pricing service) |\n| `partnerFeePercent` | Percent fee taken by partner referral code given. Fee is already deducted from quote |\n| `pathVizImage` | Base64 encoded image ready to be used within a UI |"
+      description: Quote a path for swapping between assets atomically.
       operationId: quote_v3_sor_quote_v3_post
       requestBody:
         content:
@@ -70,7 +70,7 @@ paths:
       tags:
       - Smart Order Routing
       summary: Generate Odos Zap Quote
-      description: "Quote a path for zapping into or out of liquidity positions atomically. Input tokens can be both regular ERC-20 tokens and liquidity pool tokens. Outputs can be regular ERC-20 tokens or liquidity pool tokens.\n\n## Request Body\n\n| Parameter | Description | Required |\n| --- | ------------- | --- |\n| `chainId` | Chain ID to use for quote generation. A list of valid chains can be retrieved from [`info/chains`](#/Info/get_chain_ids_info_chains_get). | Yes |\n| `inputTokens` | Input tokens and amounts for quote | Yes |\n| `outputTokens`| Output tokens and proportions for quote | Yes |\n| `gasPrice` | Gas price to use for path generation. This price directly affects the path computation. If no gas price is provided, our default price from our frontend will be used. | No |\n| `userAddr` | Address of the wallet executing the swap. If no wallet is provided, the quote cannot be turned into a path. This can be viewed as informational only. | No |\n| `slippageLimitPercent` | Slippage percent to use for checking if the path is valid. Float. Example: to set slippage to 0.5% send `0.5`. If 1% is desired, send `1`. If not provided, slippage will be set `0.3`.  | No |\n| `sourceBlacklist` | List of liquidity providers that are not to be used for the swap path. A list of all liquidity providers for a given chain can be retrieved from [`info/liquidity-sources/{chain_id}`](#/Info/liquidity_sources_info_liquidity_sources__chain_id__get) | No |\n| `sourceWhitelist` | List of liquidity providers to exclusively use for the swap path. A list of all liquidity providers for a given chain can be retrieved from [`info/liquidity-sources/{chain_id}`](#/Info/liquidity_sources_info_liquidity_sources__chain_id__get) | No |\n| `poolBlacklist` | List of pool ids that are not to be used for the swap path | No |\n| `pathVizImage` | Return a Base64 encoded SVG of path visualization image for display on web frontends | No |\n| `pathVizImageConfig` | Optional customization parameters for generated path viz image | No |\n| `disableRFQs` | Disable all exchanges that qualify as RFQs with centralized API dependencies and time-sensitive quotes or potential user address restrictions. Default is true. | No |\n| `referralCode` | Code for registering your usage with Odos and receiving partner specific benefits. [Referral Code Documentation](https://docs.odos.xyz/product/sor/v2/referral-code) | No |\n| `compact` | Use Odos V2 compact call data for transaction, defaults to `true` | No |\n| `likeAsset` | If input and output tokens are all the same asset type (ex: USD stable coins), only route through like assets for decreased slippage. Defaults to `false` | No |\n| `simple` | If a less complicated quote and/or a quicker response time is desired, this flag can be set. Defaults to `false` | No |\n\n### inputTokens\n\n| Parameter | Description | Required |\n| --- | --- | --- |\n| `tokenAddress` | Address of the token to swap from. This should be a [checksummed address](https://eips.ethereum.org/EIPS/eip-55). | Yes |\n| `amount` | Amount of the token in fixed precision. String | Yes |\n\n\n### outputTokens\n\n| Parameter | Description | Required |\n| --- | --- | --- |\n| `tokenAddress` | Address of the token to swap to. This should be a [checksummed address](https://eips.ethereum.org/EIPS/eip-55). | Yes |\n| `proportion` | Percent of token to output. For a single swap, this is set to 1. Float. | Yes |\n\n### pathVizImageConfig\n\n| Parameter | Description | Required |\n| --- | ------------- | --- |\n| `linkColors` | List of hex codes to generate color spectrum for liquidity sources in path visualization | No |\n| `nodeColor` | Hex code for setting the color of token nodes in path visualization | No |\n| `nodeTextColor` | Hex code to set the color of token symbol text on token nodes | No |\n| `legendTextColor` | Hex code to set the color of the visualization legend text | No |\n| `width` | Set a custom width proportion for the visualization | No |\n| `height` | Set a custom height proportion for the visualization | No |\n\n#### Example Full Config Response:\n\n```json\n{\n  \"linkColors\": [\"#123456\"],\n  \"nodeColor\": \"#1BEEF1\",\n  \"nodeTextColor\": \"#FFFFFF\",\n  \"legendTextColor\": \"#000000\",\n  \"width\": 1200,\n  \"height\": 800\n}\n```\n\n#### Basic integration:\n\nSet the `src` attribute of an `<img />` HTML tag to the `pathVizImage` text field of the quote response\n\n\n## Response Body\n\n| Parameter | Description |\n| --- | --- |\n| `deprecated` | If the endpoint or any part of the request is deprecated, this field will be populated with a message. This field is omitted if there is nothing to notify on. |\n| `pathId` | ID of the path used for asking for an assembled quote |\n| `blockNumber` | Block number the quote was generated for |\n| `gasEstimate` | A very naive gas estimate |\n| `gasEstimateValue` | USD Value of the `gasEstimate` |\n| `dataGasEstimate` | Used for Layer 2 chains |\n| `gweiPerGas` | Amount of gWei per gas unit |\n| `inTokens` | A list of token addresses and amounts |\n| `inAmounts` | A list of input token amounts |\n| `outTokens` | A list of token addresses and amounts |\n| `outAmounts` | A list of output token amounts |\n| `netOutValue` | USD value of the sum of the output tokens after gas |\n| `outValues` | A list of the output values of the given output tokens. In the same order as the `outputTokens` list |\n| `priceImpact` | Percent decrease in the realized price of the path from the initial price of the path before the swap is executed. |\n| `percentDiff` | Percent difference between the value of all input tokens and the value of all output tokens (as determined by the Odos pricing service) |\n| `partnerFeePercent` | Percent fee taken by partner referral code given. Fee is already deducted from quote |\n| `pathVizImage` | Base64 encoded image ready to be used within a UI |"
+      description: Quote a path for zapping into or out of liquidity positions atomically.
       operationId: quote_zap_v3_sor_quote_v3_zap_post
       requestBody:
         content:
@@ -96,7 +96,7 @@ paths:
       tags:
       - Smart Order Routing
       summary: Generate Odos Quote
-      description: "Quote a path for swapping between assets atomically. This can be used programmatically to check for a quoted price of a given trade without needing to wait for an assembled transaction to be created and provided. It can also be used to anonymously check quotes.\n\n## Request Body\n\n| Parameter | Description | Required |\n| --- | ------------- | --- |\n| `chainId` | Chain ID to use for quote generation. A list of valid chains can be retrieved from [`info/chains`](#/Info/get_chain_ids_info_chains_get). | Yes |\n| `inputTokens` | Input tokens and amounts for quote | Yes |\n| `outputTokens`| Output tokens and proportions for quote | Yes |\n| `gasPrice` | Gas price to use for path generation. This price directly affects the path computation. If no gas price is provided, our default price from our frontend will be used. | No |\n| `userAddr` | Address of the wallet executing the swap. If no wallet is provided, the quote cannot be turned into a path. This can be viewed as informational only. | No |\n| `slippageLimitPercent` | Slippage percent to use for checking if the path is valid. Float. Example: to set slippage to 0.5% send `0.5`. If 1% is desired, send `1`. If not provided, slippage will be set `0.3`.  | No |\n| `sourceBlacklist` | List of liquidity providers that are not to be used for the swap path. A list of all liquidity providers for a given chain can be retrieved from [`info/liquidity-sources/{chain_id}`](#/Info/liquidity_sources_info_liquidity_sources__chain_id__get) | No |\n| `sourceWhitelist` | List of liquidity providers to exclusively use for the swap path. A list of all liquidity providers for a given chain can be retrieved from [`info/liquidity-sources/{chain_id}`](#/Info/liquidity_sources_info_liquidity_sources__chain_id__get) | No |\n| `poolBlacklist` | List of pool ids that are not to be used for the swap path | No |\n| `pathVizImage` | Return a Base64 encoded SVG of path visualization image for display on web frontends | No |\n| `pathVizImageConfig` | Optional customization parameters for generated path viz image | No |\n| `disableRFQs` | Disable all exchanges that qualify as RFQs with centralized API dependencies and time-sensitive quotes or potential user address restrictions. Default is true. | No |\n| `referralCode` | Code for registering your usage with Odos and receiving partner specific benefits. [Referral Code Documentation](https://docs.odos.xyz/product/sor/v2/referral-code) | No |\n| `compact` | Use Odos V2 compact call data for transaction, defaults to `true` | No |\n| `likeAsset` | If input and output tokens are all the same asset type (ex: USD stable coins), only route through like assets for decreased slippage. Defaults to `false` | No |\n| `simple` | If a less complicated quote and/or a quicker response time is desired, this flag can be set. Defaults to `false` | No |\n\n### inputTokens\n\n| Parameter | Description | Required |\n| --- | --- | --- |\n| `tokenAddress` | Address of the token to swap from. This should be a [checksummed address](https://eips.ethereum.org/EIPS/eip-55). | Yes |\n| `amount` | Amount of the token in fixed precision. String | Yes |\n\n\n### outputTokens\n\n| Parameter | Description | Required |\n| --- | --- | --- |\n| `tokenAddress` | Address of the token to swap to. This should be a [checksummed address](https://eips.ethereum.org/EIPS/eip-55). | Yes |\n| `proportion` | Percent of token to output. For a single swap, this is set to 1. Float. | Yes |\n\n### pathVizImageConfig\n\n| Parameter | Description | Required |\n| --- | ------------- | --- |\n| `linkColors` | List of hex codes to generate color spectrum for liquidity sources in path visualization | No |\n| `nodeColor` | Hex code for setting the color of token nodes in path visualization | No |\n| `nodeTextColor` | Hex code to set the color of token symbol text on token nodes | No |\n| `legendTextColor` | Hex code to set the color of the visualization legend text | No |\n| `width` | Set a custom width proportion for the visualization | No |\n| `height` | Set a custom height proportion for the visualization | No |\n\n#### Example Full Config Response:\n\n```json\n{\n  \"linkColors\": [\"#123456\"],\n  \"nodeColor\": \"#1BEEF1\",\n  \"nodeTextColor\": \"#FFFFFF\",\n  \"legendTextColor\": \"#000000\",\n  \"width\": 1200,\n  \"height\": 800\n}\n```\n\n#### Basic integration:\n\nSet the `src` attribute of an `<img />` HTML tag to the `pathVizImage` text field of the quote response\n\n\n## Response Body\n\n| Parameter | Description |\n| --- | --- |\n| `deprecated` | If the endpoint or any part of the request is deprecated, this field will be populated with a message. This field is omitted if there is nothing to notify on. |\n| `pathId` | ID of the path used for asking for an assembled quote |\n| `blockNumber` | Block number the quote was generated for |\n| `gasEstimate` | A very naive gas estimate |\n| `gasEstimateValue` | USD Value of the `gasEstimate` |\n| `dataGasEstimate` | Used for Layer 2 chains |\n| `gweiPerGas` | Amount of gWei per gas unit |\n| `inTokens` | A list of token addresses and amounts |\n| `inAmounts` | A list of input token amounts |\n| `outTokens` | A list of token addresses and amounts |\n| `outAmounts` | A list of output token amounts |\n| `netOutValue` | USD value of the sum of the output tokens after gas |\n| `outValues` | A list of the output values of the given output tokens. In the same order as the `outputTokens` list |\n| `priceImpact` | Percent decrease in the realized price of the path from the initial price of the path before the swap is executed. |\n| `percentDiff` | Percent difference between the value of all input tokens and the value of all output tokens (as determined by the Odos pricing service) |\n| `partnerFeePercent` | Percent fee taken by partner referral code given. Fee is already deducted from quote |\n| `pathVizImage` | Base64 encoded image ready to be used within a UI |"
+      description: Quote a path for swapping between assets atomically.
       operationId: quote_sor_quote_v2_post
       requestBody:
         content:
@@ -122,7 +122,7 @@ paths:
       tags:
       - Smart Order Routing
       summary: Generate Odos Zap Quote
-      description: "Quote a path for zapping into or out of liquidity positions atomically. Input tokens can be both regular ERC-20 tokens and liquidity pool tokens. Outputs can be regular ERC-20 tokens or liquidity pool tokens.\n\n## Request Body\n\n| Parameter | Description | Required |\n| --- | ------------- | --- |\n| `chainId` | Chain ID to use for quote generation. A list of valid chains can be retrieved from [`info/chains`](#/Info/get_chain_ids_info_chains_get). | Yes |\n| `inputTokens` | Input tokens and amounts for quote | Yes |\n| `outputTokens`| Output tokens and proportions for quote | Yes |\n| `gasPrice` | Gas price to use for path generation. This price directly affects the path computation. If no gas price is provided, our default price from our frontend will be used. | No |\n| `userAddr` | Address of the wallet executing the swap. If no wallet is provided, the quote cannot be turned into a path. This can be viewed as informational only. | No |\n| `slippageLimitPercent` | Slippage percent to use for checking if the path is valid. Float. Example: to set slippage to 0.5% send `0.5`. If 1% is desired, send `1`. If not provided, slippage will be set `0.3`.  | No |\n| `sourceBlacklist` | List of liquidity providers that are not to be used for the swap path. A list of all liquidity providers for a given chain can be retrieved from [`info/liquidity-sources/{chain_id}`](#/Info/liquidity_sources_info_liquidity_sources__chain_id__get) | No |\n| `sourceWhitelist` | List of liquidity providers to exclusively use for the swap path. A list of all liquidity providers for a given chain can be retrieved from [`info/liquidity-sources/{chain_id}`](#/Info/liquidity_sources_info_liquidity_sources__chain_id__get) | No |\n| `poolBlacklist` | List of pool ids that are not to be used for the swap path | No |\n| `pathVizImage` | Return a Base64 encoded SVG of path visualization image for display on web frontends | No |\n| `pathVizImageConfig` | Optional customization parameters for generated path viz image | No |\n| `disableRFQs` | Disable all exchanges that qualify as RFQs with centralized API dependencies and time-sensitive quotes or potential user address restrictions. Default is true. | No |\n| `referralCode` | Code for registering your usage with Odos and receiving partner specific benefits. [Referral Code Documentation](https://docs.odos.xyz/product/sor/v2/referral-code) | No |\n| `compact` | Use Odos V2 compact call data for transaction, defaults to `true` | No |\n| `likeAsset` | If input and output tokens are all the same asset type (ex: USD stable coins), only route through like assets for decreased slippage. Defaults to `false` | No |\n| `simple` | If a less complicated quote and/or a quicker response time is desired, this flag can be set. Defaults to `false` | No |\n\n### inputTokens\n\n| Parameter | Description | Required |\n| --- | --- | --- |\n| `tokenAddress` | Address of the token to swap from. This should be a [checksummed address](https://eips.ethereum.org/EIPS/eip-55). | Yes |\n| `amount` | Amount of the token in fixed precision. String | Yes |\n\n\n### outputTokens\n\n| Parameter | Description | Required |\n| --- | --- | --- |\n| `tokenAddress` | Address of the token to swap to. This should be a [checksummed address](https://eips.ethereum.org/EIPS/eip-55). | Yes |\n| `proportion` | Percent of token to output. For a single swap, this is set to 1. Float. | Yes |\n\n### pathVizImageConfig\n\n| Parameter | Description | Required |\n| --- | ------------- | --- |\n| `linkColors` | List of hex codes to generate color spectrum for liquidity sources in path visualization | No |\n| `nodeColor` | Hex code for setting the color of token nodes in path visualization | No |\n| `nodeTextColor` | Hex code to set the color of token symbol text on token nodes | No |\n| `legendTextColor` | Hex code to set the color of the visualization legend text | No |\n| `width` | Set a custom width proportion for the visualization | No |\n| `height` | Set a custom height proportion for the visualization | No |\n\n#### Example Full Config Response:\n\n```json\n{\n  \"linkColors\": [\"#123456\"],\n  \"nodeColor\": \"#1BEEF1\",\n  \"nodeTextColor\": \"#FFFFFF\",\n  \"legendTextColor\": \"#000000\",\n  \"width\": 1200,\n  \"height\": 800\n}\n```\n\n#### Basic integration:\n\nSet the `src` attribute of an `<img />` HTML tag to the `pathVizImage` text field of the quote response\n\n\n## Response Body\n\n| Parameter | Description |\n| --- | --- |\n| `deprecated` | If the endpoint or any part of the request is deprecated, this field will be populated with a message. This field is omitted if there is nothing to notify on. |\n| `pathId` | ID of the path used for asking for an assembled quote |\n| `blockNumber` | Block number the quote was generated for |\n| `gasEstimate` | A very naive gas estimate |\n| `gasEstimateValue` | USD Value of the `gasEstimate` |\n| `dataGasEstimate` | Used for Layer 2 chains |\n| `gweiPerGas` | Amount of gWei per gas unit |\n| `inTokens` | A list of token addresses and amounts |\n| `inAmounts` | A list of input token amounts |\n| `outTokens` | A list of token addresses and amounts |\n| `outAmounts` | A list of output token amounts |\n| `netOutValue` | USD value of the sum of the output tokens after gas |\n| `outValues` | A list of the output values of the given output tokens. In the same order as the `outputTokens` list |\n| `priceImpact` | Percent decrease in the realized price of the path from the initial price of the path before the swap is executed. |\n| `percentDiff` | Percent difference between the value of all input tokens and the value of all output tokens (as determined by the Odos pricing service) |\n| `partnerFeePercent` | Percent fee taken by partner referral code given. Fee is already deducted from quote |\n| `pathVizImage` | Base64 encoded image ready to be used within a UI |"
+      description: Quote a path for zapping into or out of liquidity positions atomically.
       operationId: quote_zap_sor_quote_v2_zap_post
       requestBody:
         content:
@@ -241,7 +241,6 @@ paths:
         | `nonce` | The standard ETH nonce |
 
 
-
         ### Simulation
 
 
@@ -283,19 +282,123 @@ paths:
                 $ref: '#/components/schemas/HTTPValidationError'
 components:
   schemas:
-    SwapResponse:
+    QuoteResponse:
       properties:
-        quote:
-          $ref: '#/components/schemas/QuoteResponse'
-        assembly:
-          $ref: '#/components/schemas/PathResponse'
+        deprecated:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Deprecated
+        traceId:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Traceid
+        inTokens:
+          items:
+            type: string
+          type: array
+          title: Intokens
+        outTokens:
+          items:
+            type: string
+          type: array
+          title: Outtokens
+        inAmounts:
+          items:
+            type: string
+          type: array
+          title: Inamounts
+        outAmounts:
+          items:
+            type: string
+          type: array
+          title: Outamounts
+        gasEstimate:
+          type: number
+          title: Gasestimate
+        dataGasEstimate:
+          type: integer
+          title: Datagasestimate
+        gweiPerGas:
+          type: number
+          title: Gweipergas
+        gasEstimateValue:
+          type: number
+          title: Gasestimatevalue
+        inValues:
+          items:
+            type: number
+          type: array
+          title: Invalues
+        outValues:
+          items:
+            type: number
+          type: array
+          title: Outvalues
+        netOutValue:
+          type: number
+          title: Netoutvalue
+        priceImpact:
+          anyOf:
+          - type: number
+          - type: 'null'
+          title: Priceimpact
+        percentDiff:
+          type: number
+          title: Percentdiff
+        permit2Message:
+          anyOf:
+          - additionalProperties: true
+            type: object
+          - type: 'null'
+          title: Permit2Message
+        permit2Hash:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Permit2Hash
+        partnerFeePercent:
+          type: number
+          title: Partnerfeepercent
+          default: 0
+        pathId:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Pathid
+        pathViz:
+          anyOf:
+          - additionalProperties: true
+            type: object
+          - type: 'null'
+          title: Pathviz
+        pathVizImage:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Pathvizimage
+        blockNumber:
+          type: integer
+          title: Blocknumber
       type: object
       required:
-      - quote
-      - assembly
-      title: SwapResponse
-      description: Swap endpoint response
-    PathRequestV3:
+      - inTokens
+      - outTokens
+      - inAmounts
+      - outAmounts
+      - gasEstimate
+      - dataGasEstimate
+      - gweiPerGas
+      - gasEstimateValue
+      - inValues
+      - outValues
+      - netOutValue
+      - percentDiff
+      - blockNumber
+      title: QuoteResponse
+      description: Quote response schema
+    PathRequestV2:
       properties:
         deprecated:
           anyOf:
@@ -426,24 +529,9 @@ components:
           - type: integer
           - type: 'null'
           title: Referralcode
+          default: 0
           examples:
           - 0
-        referralFee:
-          anyOf:
-          - type: number
-          - type: 'null'
-          title: Referralfee
-          examples:
-          - 0
-        referralFeeRecipient:
-          anyOf:
-          - type: string
-            pattern: ^0x([a-fA-F0-9]){40}$
-          - type: 'null'
-          title: Referralfeerecipient
-          description: Address of wallet to receive referral fee
-          examples:
-          - '0x47E2D28169738039755586743E2dfCF3bd643f86'
         compact:
           anyOf:
           - type: boolean
@@ -468,21 +556,13 @@ components:
           default: false
           examples:
           - false
-        permit2:
-          anyOf:
-          - type: boolean
-          - type: 'null'
-          title: Permit2
-          default: false
-          examples:
-          - false
       type: object
       required:
       - chainId
       - inputTokens
       - outputTokens
-      title: PathRequestV3
-      description: Public facing path request v3 schema
+      title: PathRequestV2
+      description: Public facing path request v2 schema
       examples:
       - chainId: 1
         compact: true
@@ -498,69 +578,6 @@ components:
         sourceBlacklist: []
         sourceWhitelist: []
         userAddr: '0x47E2D28169738039755586743E2dfCF3bd643f86'
-    Simulation:
-      properties:
-        isSuccess:
-          type: boolean
-          title: Issuccess
-        amountsOut:
-          items:
-            type: integer
-          type: array
-          title: Amountsout
-        gasEstimate:
-          type: integer
-          title: Gasestimate
-        simulationError:
-          anyOf:
-          - $ref: '#/components/schemas/SimulationError'
-          - type: 'null'
-      type: object
-      required:
-      - isSuccess
-      - amountsOut
-      - gasEstimate
-      - simulationError
-      title: Simulation
-      description: "Simulation data schema\n\nAttributes:\n    is_success (bool): true if no errors were detected during simulation\n    amountsOut (List[int]): list of amounts out from simulation\n    gasEstimate (int): on-chain estimateGas raw response value\n    simulationError (Optional[SimulationError]): simulation error data (if error)"
-    Transaction:
-      properties:
-        gas:
-          type: integer
-          title: Gas
-        gasPrice:
-          type: integer
-          title: Gasprice
-        value:
-          type: string
-          title: Value
-        to:
-          type: string
-          title: To
-        from:
-          type: string
-          title: From
-        data:
-          type: string
-          title: Data
-        nonce:
-          type: integer
-          title: Nonce
-        chainId:
-          type: integer
-          title: Chainid
-      type: object
-      required:
-      - gas
-      - gasPrice
-      - value
-      - to
-      - from
-      - data
-      - nonce
-      - chainId
-      title: Transaction
-      description: "Assembled Transaction Schema\n\nAttributes:\n    gas (int): txn gas amount\n    gasPrice (int): txn gas price in gwei\n    value (str): value of the transaction\n    to (str): txn to address\n    from_ (str): txn from address\n    data (str): txn bytecode to execute\n    nonce (int): current user nonce\n    chainId (int): id of the chain transaction was assembled for"
     ValidationError:
       properties:
         loc:
@@ -582,50 +599,6 @@ components:
       - msg
       - type
       title: ValidationError
-    AssemblePathRequest:
-      properties:
-        userAddr:
-          type: string
-          title: Useraddr
-          examples:
-          - '0x47E2D28169738039755586743E2dfCF3bd643f86'
-        pathId:
-          type: string
-          title: Pathid
-          examples:
-          - 95bb963d193cd229a0b4087f34382ea2
-        simulate:
-          anyOf:
-          - type: boolean
-          - type: 'null'
-          title: Simulate
-          default: false
-          examples:
-          - false
-        receiver:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Receiver
-          examples:
-          - null
-        permit2Signature:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Permit2Signature
-          examples:
-          - null
-      type: object
-      required:
-      - userAddr
-      - pathId
-      title: AssemblePathRequest
-      description: Assemble Path Request Schema
-      examples:
-      - pathId: 95bb963d193cd229a0b4087f34382ea2
-        simulate: false
-        userAddr: '0x47E2D28169738039755586743E2dfCF3bd643f86'
     SwapRequestV3:
       properties:
         deprecated:
@@ -857,131 +830,23 @@ components:
       - errorMessage
       title: SimulationError
       description: "Simulation error schema\n\nAttributes:\n    type (str): error type\n    errorMessage (str): content of the simulation error message"
-    QuoteResponse:
+    TokenProportion:
       properties:
-        deprecated:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Deprecated
-        traceId:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Traceid
-        inTokens:
-          items:
-            type: string
-          type: array
-          title: Intokens
-        outTokens:
-          items:
-            type: string
-          type: array
-          title: Outtokens
-        inAmounts:
-          items:
-            type: string
-          type: array
-          title: Inamounts
-        outAmounts:
-          items:
-            type: string
-          type: array
-          title: Outamounts
-        gasEstimate:
+        tokenAddress:
+          type: string
+          pattern: ^0x([a-fA-F0-9]){40}$
+          title: Tokenaddress
+          description: Token contract address
+        proportion:
           type: number
-          title: Gasestimate
-        dataGasEstimate:
-          type: integer
-          title: Datagasestimate
-        gweiPerGas:
-          type: number
-          title: Gweipergas
-        gasEstimateValue:
-          type: number
-          title: Gasestimatevalue
-        inValues:
-          items:
-            type: number
-          type: array
-          title: Invalues
-        outValues:
-          items:
-            type: number
-          type: array
-          title: Outvalues
-        netOutValue:
-          type: number
-          title: Netoutvalue
-        priceImpact:
-          anyOf:
-          - type: number
-          - type: 'null'
-          title: Priceimpact
-        percentDiff:
-          type: number
-          title: Percentdiff
-        permit2Message:
-          anyOf:
-          - additionalProperties: true
-            type: object
-          - type: 'null'
-          title: Permit2Message
-        permit2Hash:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Permit2Hash
-        partnerFeePercent:
-          type: number
-          title: Partnerfeepercent
-          default: 0
-        pathId:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Pathid
-        pathViz:
-          anyOf:
-          - additionalProperties: true
-            type: object
-          - type: 'null'
-          title: Pathviz
-        pathVizImage:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Pathvizimage
-        blockNumber:
-          type: integer
-          title: Blocknumber
+          title: Proportion
+          description: Proportion of token
+          default: 1
       type: object
       required:
-      - inTokens
-      - outTokens
-      - inAmounts
-      - outAmounts
-      - gasEstimate
-      - dataGasEstimate
-      - gweiPerGas
-      - gasEstimateValue
-      - inValues
-      - outValues
-      - netOutValue
-      - percentDiff
-      - blockNumber
-      title: QuoteResponse
-      description: Quote response schema
-    HTTPValidationError:
-      properties:
-        detail:
-          items:
-            $ref: '#/components/schemas/ValidationError'
-          type: array
-          title: Detail
-      type: object
-      title: HTTPValidationError
+      - tokenAddress
+      title: TokenProportion
+      description: Quote token output proportion schema
     PathVizImageConfig:
       properties:
         linkColors:
@@ -1036,23 +901,66 @@ components:
       type: object
       title: PathVizImageConfig
       description: Schema for path viz image config
-    TokenProportion:
+    PathResponse:
       properties:
-        tokenAddress:
-          type: string
-          pattern: ^0x([a-fA-F0-9]){40}$
-          title: Tokenaddress
-          description: Token contract address
-        proportion:
+        deprecated:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Deprecated
+        traceId:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Traceid
+        blockNumber:
+          type: integer
+          title: Blocknumber
+        gasEstimate:
+          type: integer
+          title: Gasestimate
+        gasEstimateValue:
           type: number
-          title: Proportion
-          description: Proportion of token
-          default: 1
+          title: Gasestimatevalue
+        inputTokens:
+          items:
+            $ref: '#/components/schemas/TokenAmount'
+          type: array
+          title: Inputtokens
+        outputTokens:
+          items:
+            $ref: '#/components/schemas/TokenAmount'
+          type: array
+          title: Outputtokens
+        netOutValue:
+          type: number
+          title: Netoutvalue
+        outValues:
+          items:
+            type: string
+          type: array
+          title: Outvalues
+        transaction:
+          anyOf:
+          - $ref: '#/components/schemas/Transaction'
+          - type: 'null'
+        simulation:
+          anyOf:
+          - $ref: '#/components/schemas/Simulation'
+          - type: 'null'
       type: object
       required:
-      - tokenAddress
-      title: TokenProportion
-      description: Quote token output proportion schema
+      - blockNumber
+      - gasEstimate
+      - gasEstimateValue
+      - inputTokens
+      - outputTokens
+      - netOutValue
+      - outValues
+      - transaction
+      - simulation
+      title: PathResponse
+      description: "Assembled Path Transaction Response including quote, transaction, and simulation data\n\nAttributes:\n    blockNumber (int): block number of transaction quote\n    gasEstimate (int): gas estimate for transaction quote\n    gasEstimateValue (float): gas estimate value for transaction quote in gwei\n    inputTokens (List[TokenAmount]): list of input token amounts and input values\n    outputTokens (List[TokenAmount]): list of output token amounts and output values\n    netOutValue (float): new out value of transaction from quote\n    outValues (List[str]) out values from transaction quote\n    transaction (Optional[Transaction]): assembled transaction data for quote\n    simulation (Optional[Simulation]): simulation output data if enabled\n    pathVizImage (Optional[str]): path viz image if requested"
     TokenAmount:
       properties:
         tokenAddress:
@@ -1071,7 +979,89 @@ components:
       - amount
       title: TokenAmount
       description: Quote token input amount schema
-    PathRequestV2:
+    Transaction:
+      properties:
+        gas:
+          type: integer
+          title: Gas
+        gasPrice:
+          type: integer
+          title: Gasprice
+        value:
+          type: string
+          title: Value
+        to:
+          type: string
+          title: To
+        from:
+          type: string
+          title: From
+        data:
+          type: string
+          title: Data
+        nonce:
+          type: integer
+          title: Nonce
+        chainId:
+          type: integer
+          title: Chainid
+      type: object
+      required:
+      - gas
+      - gasPrice
+      - value
+      - to
+      - from
+      - data
+      - nonce
+      - chainId
+      title: Transaction
+      description: "Assembled Transaction Schema\n\nAttributes:\n    gas (int): txn gas amount\n    gasPrice (int): txn gas price in gwei\n    value (str): value of the transaction\n    to (str): txn to address\n    from_ (str): txn from address\n    data (str): txn bytecode to execute\n    nonce (int): current user nonce\n    chainId (int): id of the chain transaction was assembled for"
+    AssemblePathRequest:
+      properties:
+        userAddr:
+          type: string
+          title: Useraddr
+          examples:
+          - '0x47E2D28169738039755586743E2dfCF3bd643f86'
+        pathId:
+          type: string
+          title: Pathid
+          examples:
+          - 95bb963d193cd229a0b4087f34382ea2
+        simulate:
+          anyOf:
+          - type: boolean
+          - type: 'null'
+          title: Simulate
+          default: false
+          examples:
+          - false
+        receiver:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Receiver
+          examples:
+          - null
+        permit2Signature:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Permit2Signature
+          examples:
+          - null
+      type: object
+      required:
+      - userAddr
+      - pathId
+      title: AssemblePathRequest
+      description: Assemble Path Request Schema
+      examples:
+      - pathId: 95bb963d193cd229a0b4087f34382ea2
+        simulate: false
+        userAddr: '0x47E2D28169738039755586743E2dfCF3bd643f86'
+    PathRequestV3:
       properties:
         deprecated:
           anyOf:
@@ -1202,9 +1192,24 @@ components:
           - type: integer
           - type: 'null'
           title: Referralcode
-          default: 0
           examples:
           - 0
+        referralFee:
+          anyOf:
+          - type: number
+          - type: 'null'
+          title: Referralfee
+          examples:
+          - 0
+        referralFeeRecipient:
+          anyOf:
+          - type: string
+            pattern: ^0x([a-fA-F0-9]){40}$
+          - type: 'null'
+          title: Referralfeerecipient
+          description: Address of wallet to receive referral fee
+          examples:
+          - '0x47E2D28169738039755586743E2dfCF3bd643f86'
         compact:
           anyOf:
           - type: boolean
@@ -1229,13 +1234,21 @@ components:
           default: false
           examples:
           - false
+        permit2:
+          anyOf:
+          - type: boolean
+          - type: 'null'
+          title: Permit2
+          default: false
+          examples:
+          - false
       type: object
       required:
       - chainId
       - inputTokens
       - outputTokens
-      title: PathRequestV2
-      description: Public facing path request v2 schema
+      title: PathRequestV3
+      description: Public facing path request v3 schema
       examples:
       - chainId: 1
         compact: true
@@ -1251,63 +1264,49 @@ components:
         sourceBlacklist: []
         sourceWhitelist: []
         userAddr: '0x47E2D28169738039755586743E2dfCF3bd643f86'
-    PathResponse:
+    SwapResponse:
       properties:
-        deprecated:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Deprecated
-        traceId:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Traceid
-        blockNumber:
-          type: integer
-          title: Blocknumber
+        quote:
+          $ref: '#/components/schemas/QuoteResponse'
+        assembly:
+          $ref: '#/components/schemas/PathResponse'
+      type: object
+      required:
+      - quote
+      - assembly
+      title: SwapResponse
+      description: Swap endpoint response
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
+      type: object
+      title: HTTPValidationError
+    Simulation:
+      properties:
+        isSuccess:
+          type: boolean
+          title: Issuccess
+        amountsOut:
+          items:
+            type: integer
+          type: array
+          title: Amountsout
         gasEstimate:
           type: integer
           title: Gasestimate
-        gasEstimateValue:
-          type: number
-          title: Gasestimatevalue
-        inputTokens:
-          items:
-            $ref: '#/components/schemas/TokenAmount'
-          type: array
-          title: Inputtokens
-        outputTokens:
-          items:
-            $ref: '#/components/schemas/TokenAmount'
-          type: array
-          title: Outputtokens
-        netOutValue:
-          type: number
-          title: Netoutvalue
-        outValues:
-          items:
-            type: string
-          type: array
-          title: Outvalues
-        transaction:
+        simulationError:
           anyOf:
-          - $ref: '#/components/schemas/Transaction'
-          - type: 'null'
-        simulation:
-          anyOf:
-          - $ref: '#/components/schemas/Simulation'
+          - $ref: '#/components/schemas/SimulationError'
           - type: 'null'
       type: object
       required:
-      - blockNumber
+      - isSuccess
+      - amountsOut
       - gasEstimate
-      - gasEstimateValue
-      - inputTokens
-      - outputTokens
-      - netOutValue
-      - outValues
-      - transaction
-      - simulation
-      title: PathResponse
-      description: "Assembled Path Transaction Response including quote, transaction, and simulation data\n\nAttributes:\n    blockNumber (int): block number of transaction quote\n    gasEstimate (int): gas estimate for transaction quote\n    gasEstimateValue (float): gas estimate value for transaction quote in gwei\n    inputTokens (List[TokenAmount]): list of input token amounts and input values\n    outputTokens (List[TokenAmount]): list of output token amounts and output values\n    netOutValue (float): new out value of transaction from quote\n    outValues (List[str]) out values from transaction quote\n    transaction (Optional[Transaction]): assembled transaction data for quote\n    simulation (Optional[Simulation]): simulation output data if enabled\n    pathVizImage (Optional[str]): path viz image if requested"
+      - simulationError
+      title: Simulation
+      description: "Simulation data schema\n\nAttributes:\n    is_success (bool): true if no errors were detected during simulation\n    amountsOut (List[int]): list of amounts out from simulation\n    gasEstimate (int): on-chain estimateGas raw response value\n    simulationError (Optional[SimulationError]): simulation error data (if error)"

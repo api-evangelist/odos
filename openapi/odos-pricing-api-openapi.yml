@@ -1,7 +1,7 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
-  title: Odos Information Pricing API
-  description: "<!-- ## Documentation\n\nFor more detailed documentation, visit [https://docs.odos.xyz](https://docs.odos.xyz)\n\n## Status\n\nService availability can be found on our status page: [https://status.odos.xyz](https://status.odos.xyz)\n -->"
+  title: Odos Pricing API
+  description: ''
   version: 3.0.0
   x-logo:
     url: https://assets.odos.xyz/logo_orange_transparent.png
@@ -136,65 +136,6 @@ components:
       - msg
       - type
       title: ValidationError
-    HTTPValidationError:
-      properties:
-        detail:
-          items:
-            $ref: '#/components/schemas/ValidationError'
-          type: array
-          title: Detail
-      type: object
-      title: HTTPValidationError
-    ChainTokenPriceMap:
-      properties:
-        deprecated:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Deprecated
-        traceId:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Traceid
-        currencyId:
-          type: string
-          title: Currencyid
-        tokenPrices:
-          additionalProperties:
-            anyOf:
-            - type: number
-            - type: 'null'
-          type: object
-          title: Tokenprices
-      type: object
-      required:
-      - currencyId
-      - tokenPrices
-      title: ChainTokenPriceMap
-      description: "All token prices for a given chain\n\nAttributes:\n    currencyId (str): price service id of the currency\n    tokenPrices (dict): Token and price"
-    CurrencyInfoList:
-      properties:
-        deprecated:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Deprecated
-        traceId:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Traceid
-        currencies:
-          items:
-            $ref: '#/components/schemas/CurrencyInfo'
-          type: array
-          title: Currencies
-      type: object
-      required:
-      - currencies
-      title: CurrencyInfoList
-      description: "Schema for list of supported currency info\n\nAttributes:\n    currencies (List[CurrencyInfo]): list of supported currency info entries"
     CurrencyInfo:
       properties:
         id:
@@ -235,3 +176,62 @@ components:
       - price
       title: TokenPrice
       description: "Schema for basic token price structure\n\nAttributes:\n    currencyId (str): price service id of the currency\n    price (Optional[float]): fiat price of asset if it is available"
+    ChainTokenPriceMap:
+      properties:
+        deprecated:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Deprecated
+        traceId:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Traceid
+        currencyId:
+          type: string
+          title: Currencyid
+        tokenPrices:
+          additionalProperties:
+            anyOf:
+            - type: number
+            - type: 'null'
+          type: object
+          title: Tokenprices
+      type: object
+      required:
+      - currencyId
+      - tokenPrices
+      title: ChainTokenPriceMap
+      description: "All token prices for a given chain\n\nAttributes:\n    currencyId (str): price service id of the currency\n    tokenPrices (dict): Token and price"
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
+      type: object
+      title: HTTPValidationError
+    CurrencyInfoList:
+      properties:
+        deprecated:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Deprecated
+        traceId:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Traceid
+        currencies:
+          items:
+            $ref: '#/components/schemas/CurrencyInfo'
+          type: array
+          title: Currencies
+      type: object
+      required:
+      - currencies
+      title: CurrencyInfoList
+      description: "Schema for list of supported currency info\n\nAttributes:\n    currencies (List[CurrencyInfo]): list of supported currency info entries"
