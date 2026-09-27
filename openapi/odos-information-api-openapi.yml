@@ -259,42 +259,44 @@ paths:
                 $ref: '#/components/schemas/HTTPValidationError'
 components:
   schemas:
-    Token:
+    RouterAddress:
       properties:
-        name:
-          type: string
-          title: Name
-        symbol:
-          type: string
-          title: Symbol
-        decimals:
-          type: integer
-          title: Decimals
-        assetId:
-          type: string
-          title: Assetid
-        assetType:
-          type: string
-          title: Assettype
-        protocolId:
+        deprecated:
           anyOf:
           - type: string
           - type: 'null'
-          title: Protocolid
-        isRebasing:
-          type: boolean
-          title: Isrebasing
+          title: Deprecated
+        traceId:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Traceid
+        address:
+          type: string
+          pattern: ^0x([a-fA-F0-9]){40}$
+          title: Address
+          description: Address of Odos Router
       type: object
       required:
-      - name
-      - symbol
-      - decimals
-      - assetId
-      - assetType
-      - protocolId
-      - isRebasing
-      title: Token
-      description: Token Schema
+      - address
+      title: RouterAddress
+      description: Odos Router Address schema
+    OdosApiVersion:
+      type: string
+      enum:
+      - v3
+      - v2
+      title: OdosApiVersion
+      description: Odos API supported versions
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
+      type: object
+      title: HTTPValidationError
     ValidationError:
       properties:
         loc:
@@ -316,6 +318,92 @@ components:
       - msg
       - type
       title: ValidationError
+    ContractInfo:
+      properties:
+        deprecated:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Deprecated
+        traceId:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Traceid
+        chainId:
+          type: integer
+          title: Chainid
+        routerAddress:
+          type: string
+          title: Routeraddress
+        executorAddress:
+          type: string
+          title: Executoraddress
+        routerAbi:
+          anyOf:
+          - additionalProperties: true
+            type: object
+          - type: 'null'
+          title: Routerabi
+        erc20Abi:
+          anyOf:
+          - additionalProperties: true
+            type: object
+          - type: 'null'
+          title: Erc20Abi
+      type: object
+      required:
+      - chainId
+      - routerAddress
+      - executorAddress
+      - routerAbi
+      - erc20Abi
+      title: ContractInfo
+      description: Odos Contract Info Schema
+    TokenMap:
+      properties:
+        deprecated:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Deprecated
+        traceId:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Traceid
+        tokenMap:
+          additionalProperties:
+            $ref: '#/components/schemas/Token'
+          type: object
+          title: Tokenmap
+      type: object
+      required:
+      - tokenMap
+      title: TokenMap
+      description: Token Map Schema
+    SupportedChains:
+      properties:
+        deprecated:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Deprecated
+        traceId:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Traceid
+        chains:
+          items:
+            type: integer
+          type: array
+          title: Chains
+      type: object
+      required:
+      - chains
+      title: SupportedChains
+      description: Supported Chains schema
     ExecutorAddress:
       properties:
         deprecated:
@@ -360,77 +448,6 @@ components:
       - sources
       title: LiquiditySources
       description: Odos liquidity sources schema
-    OdosApiVersion:
-      type: string
-      enum:
-      - v3
-      - v2
-      title: OdosApiVersion
-      description: Odos API supported versions
-    TokenMap:
-      properties:
-        deprecated:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Deprecated
-        traceId:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Traceid
-        tokenMap:
-          additionalProperties:
-            $ref: '#/components/schemas/Token'
-          type: object
-          title: Tokenmap
-      type: object
-      required:
-      - tokenMap
-      title: TokenMap
-      description: Token Map Schema
-    ContractInfo:
-      properties:
-        deprecated:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Deprecated
-        traceId:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Traceid
-        chainId:
-          type: integer
-          title: Chainid
-        routerAddress:
-          type: string
-          title: Routeraddress
-        executorAddress:
-          type: string
-          title: Executoraddress
-        routerAbi:
-          anyOf:
-          - additionalProperties: true
-            type: object
-          - type: 'null'
-          title: Routerabi
-        erc20Abi:
-          anyOf:
-          - additionalProperties: true
-            type: object
-          - type: 'null'
-          title: Erc20Abi
-      type: object
-      required:
-      - chainId
-      - routerAddress
-      - executorAddress
-      - routerAbi
-      - erc20Abi
-      title: ContractInfo
-      description: Odos Contract Info Schema
     CurrentBlockNumber:
       properties:
         deprecated:
@@ -451,56 +468,39 @@ components:
       - blockNumber
       title: CurrentBlockNumber
       description: "Schema for current block number response\n\nAttributes:\n    blockNumber (int): current odos block number"
-    RouterAddress:
+    Token:
       properties:
-        deprecated:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Deprecated
-        traceId:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Traceid
-        address:
+        name:
           type: string
-          pattern: ^0x([a-fA-F0-9]){40}$
-          title: Address
-          description: Address of Odos Router
-      type: object
-      required:
-      - address
-      title: RouterAddress
-      description: Odos Router Address schema
-    SupportedChains:
-      properties:
-        deprecated:
+          title: Name
+        symbol:
+          type: string
+          title: Symbol
+        decimals:
+          type: integer
+          title: Decimals
+        assetId:
+          type: string
+          title: Assetid
+        assetType:
+          type: string
+          title: Assettype
+        protocolId:
           anyOf:
           - type: string
           - type: 'null'
-          title: Deprecated
-        traceId:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Traceid
-        chains:
-          items:
-            type: integer
-          type: array
-          title: Chains
+          title: Protocolid
+        isRebasing:
+          type: boolean
+          title: Isrebasing
       type: object
       required:
-      - chains
-      title: SupportedChains
-      description: Supported Chains schema
-    HTTPValidationError:
-      properties:
-        detail:
-          items:
-            $ref: '#/components/schemas/ValidationError'
-          type: array
-          title: Detail
-      type: object
-      title: HTTPValidationError
+      - name
+      - symbol
+      - decimals
+      - assetId
+      - assetType
+      - protocolId
+      - isRebasing
+      title: Token
+      description: Token Schema
