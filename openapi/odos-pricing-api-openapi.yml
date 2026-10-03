@@ -115,6 +115,28 @@ paths:
                 $ref: '#/components/schemas/HTTPValidationError'
 components:
   schemas:
+    CurrencyInfoList:
+      properties:
+        deprecated:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Deprecated
+        traceId:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Traceid
+        currencies:
+          items:
+            $ref: '#/components/schemas/CurrencyInfo'
+          type: array
+          title: Currencies
+      type: object
+      required:
+      - currencies
+      title: CurrencyInfoList
+      description: "Schema for list of supported currency info\n\nAttributes:\n    currencies (List[CurrencyInfo]): list of supported currency info entries"
     ValidationError:
       properties:
         loc:
@@ -150,32 +172,6 @@ components:
       - name
       title: CurrencyInfo
       description: "Schema for supported currency info\n\nAttributes:TokenPrice\n    id (str): price service id of the currency\n    name (str): name of currency corresponding to ID"
-    TokenPrice:
-      properties:
-        deprecated:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Deprecated
-        traceId:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Traceid
-        currencyId:
-          type: string
-          title: Currencyid
-        price:
-          anyOf:
-          - type: number
-          - type: 'null'
-          title: Price
-      type: object
-      required:
-      - currencyId
-      - price
-      title: TokenPrice
-      description: "Schema for basic token price structure\n\nAttributes:\n    currencyId (str): price service id of the currency\n    price (Optional[float]): fiat price of asset if it is available"
     ChainTokenPriceMap:
       properties:
         deprecated:
@@ -204,16 +200,7 @@ components:
       - tokenPrices
       title: ChainTokenPriceMap
       description: "All token prices for a given chain\n\nAttributes:\n    currencyId (str): price service id of the currency\n    tokenPrices (dict): Token and price"
-    HTTPValidationError:
-      properties:
-        detail:
-          items:
-            $ref: '#/components/schemas/ValidationError'
-          type: array
-          title: Detail
-      type: object
-      title: HTTPValidationError
-    CurrencyInfoList:
+    TokenPrice:
       properties:
         deprecated:
           anyOf:
@@ -225,13 +212,26 @@ components:
           - type: string
           - type: 'null'
           title: Traceid
-        currencies:
-          items:
-            $ref: '#/components/schemas/CurrencyInfo'
-          type: array
-          title: Currencies
+        currencyId:
+          type: string
+          title: Currencyid
+        price:
+          anyOf:
+          - type: number
+          - type: 'null'
+          title: Price
       type: object
       required:
-      - currencies
-      title: CurrencyInfoList
-      description: "Schema for list of supported currency info\n\nAttributes:\n    currencies (List[CurrencyInfo]): list of supported currency info entries"
+      - currencyId
+      - price
+      title: TokenPrice
+      description: "Schema for basic token price structure\n\nAttributes:\n    currencyId (str): price service id of the currency\n    price (Optional[float]): fiat price of asset if it is available"
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
+      type: object
+      title: HTTPValidationError
