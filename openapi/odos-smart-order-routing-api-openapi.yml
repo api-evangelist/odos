@@ -282,6 +282,58 @@ paths:
                 $ref: '#/components/schemas/HTTPValidationError'
 components:
   schemas:
+    SimulationError:
+      properties:
+        type:
+          type: string
+          title: Type
+        errorMessage:
+          type: string
+          title: Errormessage
+      type: object
+      required:
+      - type
+      - errorMessage
+      title: SimulationError
+      description: "Simulation error schema\n\nAttributes:\n    type (str): error type\n    errorMessage (str): content of the simulation error message"
+    TokenProportion:
+      properties:
+        tokenAddress:
+          type: string
+          pattern: ^0x([a-fA-F0-9]){40}$
+          title: Tokenaddress
+          description: Token contract address
+        proportion:
+          type: number
+          title: Proportion
+          description: Proportion of token
+          default: 1
+      type: object
+      required:
+      - tokenAddress
+      title: TokenProportion
+      description: Quote token output proportion schema
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
+      type: object
+      title: HTTPValidationError
+    SwapResponse:
+      properties:
+        quote:
+          $ref: '#/components/schemas/QuoteResponse'
+        assembly:
+          $ref: '#/components/schemas/PathResponse'
+      type: object
+      required:
+      - quote
+      - assembly
+      title: SwapResponse
+      description: Swap endpoint response
     PathRequestV2:
       properties:
         deprecated:
@@ -462,60 +514,209 @@ components:
         sourceBlacklist: []
         sourceWhitelist: []
         userAddr: '0x47E2D28169738039755586743E2dfCF3bd643f86'
-    PathVizImageConfig:
+    PathRequestV3:
       properties:
-        linkColors:
+        deprecated:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Deprecated
+        traceId:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Traceid
+        chainId:
+          type: integer
+          title: Chainid
+          description: Chain ID to request path for
+          examples:
+          - 1
+        inputTokens:
+          items:
+            $ref: '#/components/schemas/TokenAmount'
+          type: array
+          maxItems: 10
+          minItems: 1
+          title: Inputtokens
+          description: Input tokens and amounts for quote
+          examples:
+          - - amount: '189000000'
+              tokenAddress: '0x2260FAC5E5542a773Aa44fBCfeDf7C193bc2C599'
+        outputTokens:
+          items:
+            $ref: '#/components/schemas/TokenProportion'
+          type: array
+          maxItems: 10
+          minItems: 1
+          title: Outputtokens
+          description: Output tokens and proportions for quote
+          examples:
+          - - proportion: 1.0
+              tokenAddress: '0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2'
+        gasPrice:
+          anyOf:
+          - type: number
+            exclusiveMinimum: 0.0
+          - type: 'null'
+          title: Gasprice
+          description: Gas Price
+          examples:
+          - 20
+        userAddr:
+          anyOf:
+          - type: string
+            pattern: ^0x([a-fA-F0-9]){40}$
+          - type: 'null'
+          title: Useraddr
+          description: Address of wallet to use to generate transaction
+          default: '0x47E2D28169738039755586743E2dfCF3bd643f86'
+          examples:
+          - '0x47E2D28169738039755586743E2dfCF3bd643f86'
+        slippageLimitPercent:
+          anyOf:
+          - type: number
+            exclusiveMinimum: 0.0
+          - type: 'null'
+          title: Slippagelimitpercent
+          description: Slippage to use for checking the path is valid
+          default: 0.3
+          examples:
+          - 0.3
+        sourceBlacklist:
           anyOf:
           - items:
               type: string
-              pattern: ^#(?:[A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$
             type: array
           - type: 'null'
-          title: Linkcolors
+          title: Sourceblacklist
+          description: List of liquidity providers that are not to be used for the swap path.
           examples:
-          - null
-        nodeColor:
+          - []
+        sourceWhitelist:
           anyOf:
-          - type: string
-            pattern: ^#(?:[A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$
+          - items:
+              type: string
+            type: array
           - type: 'null'
-          title: Nodecolor
+          title: Sourcewhitelist
+          description: List of liquidity providers to exclusively use for the swap path.
           examples:
-          - null
-        nodeTextColor:
+          - []
+        poolBlacklist:
           anyOf:
-          - type: string
-            pattern: ^#(?:[A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$
+          - items:
+              type: string
+            type: array
           - type: 'null'
-          title: Nodetextcolor
+          title: Poolblacklist
+          description: List of pool addresses to exclude from swap path consideration
           examples:
-          - null
-        legendTextColor:
+          - []
+        pathViz:
           anyOf:
-          - type: string
-            pattern: ^#(?:[A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$
+          - type: boolean
           - type: 'null'
-          title: Legendtextcolor
+          title: Pathviz
+          default: false
           examples:
-          - null
-        width:
+          - false
+        pathVizImage:
+          anyOf:
+          - type: boolean
+          - type: 'null'
+          title: Pathvizimage
+          default: false
+        pathVizImageConfig:
+          anyOf:
+          - $ref: '#/components/schemas/PathVizImageConfig'
+          - type: 'null'
+        disableRFQs:
+          anyOf:
+          - type: boolean
+          - type: 'null'
+          title: Disablerfqs
+          description: Flag to disable all off-chain RFQs from order routing
+          default: true
+          examples:
+          - true
+        referralCode:
           anyOf:
           - type: integer
           - type: 'null'
-          title: Width
+          title: Referralcode
           examples:
-          - null
-        height:
+          - 0
+        referralFee:
           anyOf:
-          - type: integer
+          - type: number
           - type: 'null'
-          title: Height
+          title: Referralfee
           examples:
-          - null
-      additionalProperties: true
+          - 0
+        referralFeeRecipient:
+          anyOf:
+          - type: string
+            pattern: ^0x([a-fA-F0-9]){40}$
+          - type: 'null'
+          title: Referralfeerecipient
+          description: Address of wallet to receive referral fee
+          examples:
+          - '0x47E2D28169738039755586743E2dfCF3bd643f86'
+        compact:
+          anyOf:
+          - type: boolean
+          - type: 'null'
+          title: Compact
+          default: true
+          examples:
+          - true
+        likeAsset:
+          anyOf:
+          - type: boolean
+          - type: 'null'
+          title: Likeasset
+          default: false
+          examples:
+          - false
+        simple:
+          anyOf:
+          - type: boolean
+          - type: 'null'
+          title: Simple
+          default: false
+          examples:
+          - false
+        permit2:
+          anyOf:
+          - type: boolean
+          - type: 'null'
+          title: Permit2
+          default: false
+          examples:
+          - false
       type: object
-      title: PathVizImageConfig
-      description: Schema for path viz image config
+      required:
+      - chainId
+      - inputTokens
+      - outputTokens
+      title: PathRequestV3
+      description: Public facing path request v3 schema
+      examples:
+      - chainId: 1
+        compact: true
+        gasPrice: 20
+        inputTokens:
+        - amount: '189000000'
+          tokenAddress: '0x2260FAC5E5542a773Aa44fBCfeDf7C193bc2C599'
+        outputTokens:
+        - proportion: 1
+          tokenAddress: '0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2'
+        referralCode: 0
+        slippageLimitPercent: 0.3
+        sourceBlacklist: []
+        sourceWhitelist: []
+        userAddr: '0x47E2D28169738039755586743E2dfCF3bd643f86'
     ValidationError:
       properties:
         loc:
@@ -537,127 +738,6 @@ components:
       - msg
       - type
       title: ValidationError
-    PathResponse:
-      properties:
-        deprecated:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Deprecated
-        traceId:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Traceid
-        blockNumber:
-          type: integer
-          title: Blocknumber
-        gasEstimate:
-          type: integer
-          title: Gasestimate
-        gasEstimateValue:
-          type: number
-          title: Gasestimatevalue
-        inputTokens:
-          items:
-            $ref: '#/components/schemas/TokenAmount'
-          type: array
-          title: Inputtokens
-        outputTokens:
-          items:
-            $ref: '#/components/schemas/TokenAmount'
-          type: array
-          title: Outputtokens
-        netOutValue:
-          type: number
-          title: Netoutvalue
-        outValues:
-          items:
-            type: string
-          type: array
-          title: Outvalues
-        transaction:
-          anyOf:
-          - $ref: '#/components/schemas/Transaction'
-          - type: 'null'
-        simulation:
-          anyOf:
-          - $ref: '#/components/schemas/Simulation'
-          - type: 'null'
-      type: object
-      required:
-      - blockNumber
-      - gasEstimate
-      - gasEstimateValue
-      - inputTokens
-      - outputTokens
-      - netOutValue
-      - outValues
-      - transaction
-      - simulation
-      title: PathResponse
-      description: "Assembled Path Transaction Response including quote, transaction, and simulation data\n\nAttributes:\n    blockNumber (int): block number of transaction quote\n    gasEstimate (int): gas estimate for transaction quote\n    gasEstimateValue (float): gas estimate value for transaction quote in gwei\n    inputTokens (List[TokenAmount]): list of input token amounts and input values\n    outputTokens (List[TokenAmount]): list of output token amounts and output values\n    netOutValue (float): new out value of transaction from quote\n    outValues (List[str]) out values from transaction quote\n    transaction (Optional[Transaction]): assembled transaction data for quote\n    simulation (Optional[Simulation]): simulation output data if enabled\n    pathVizImage (Optional[str]): path viz image if requested"
-    SimulationError:
-      properties:
-        type:
-          type: string
-          title: Type
-        errorMessage:
-          type: string
-          title: Errormessage
-      type: object
-      required:
-      - type
-      - errorMessage
-      title: SimulationError
-      description: "Simulation error schema\n\nAttributes:\n    type (str): error type\n    errorMessage (str): content of the simulation error message"
-    SwapResponse:
-      properties:
-        quote:
-          $ref: '#/components/schemas/QuoteResponse'
-        assembly:
-          $ref: '#/components/schemas/PathResponse'
-      type: object
-      required:
-      - quote
-      - assembly
-      title: SwapResponse
-      description: Swap endpoint response
-    TokenAmount:
-      properties:
-        tokenAddress:
-          type: string
-          pattern: ^0x([a-fA-F0-9]){40}$
-          title: Tokenaddress
-          description: Token contract address
-        amount:
-          type: string
-          pattern: ^\d{1,64}$
-          title: Amount
-          description: Amount of token to swap
-      type: object
-      required:
-      - tokenAddress
-      - amount
-      title: TokenAmount
-      description: Quote token input amount schema
-    TokenProportion:
-      properties:
-        tokenAddress:
-          type: string
-          pattern: ^0x([a-fA-F0-9]){40}$
-          title: Tokenaddress
-          description: Token contract address
-        proportion:
-          type: number
-          title: Proportion
-          description: Proportion of token
-          default: 1
-      type: object
-      required:
-      - tokenAddress
-      title: TokenProportion
-      description: Quote token output proportion schema
     QuoteResponse:
       properties:
         deprecated:
@@ -774,53 +854,6 @@ components:
       - blockNumber
       title: QuoteResponse
       description: Quote response schema
-    HTTPValidationError:
-      properties:
-        detail:
-          items:
-            $ref: '#/components/schemas/ValidationError'
-          type: array
-          title: Detail
-      type: object
-      title: HTTPValidationError
-    Transaction:
-      properties:
-        gas:
-          type: integer
-          title: Gas
-        gasPrice:
-          type: integer
-          title: Gasprice
-        value:
-          type: string
-          title: Value
-        to:
-          type: string
-          title: To
-        from:
-          type: string
-          title: From
-        data:
-          type: string
-          title: Data
-        nonce:
-          type: integer
-          title: Nonce
-        chainId:
-          type: integer
-          title: Chainid
-      type: object
-      required:
-      - gas
-      - gasPrice
-      - value
-      - to
-      - from
-      - data
-      - nonce
-      - chainId
-      title: Transaction
-      description: "Assembled Transaction Schema\n\nAttributes:\n    gas (int): txn gas amount\n    gasPrice (int): txn gas price in gwei\n    value (str): value of the transaction\n    to (str): txn to address\n    from_ (str): txn from address\n    data (str): txn bytecode to execute\n    nonce (int): current user nonce\n    chainId (int): id of the chain transaction was assembled for"
     SwapRequestV3:
       properties:
         deprecated:
@@ -1038,31 +1071,6 @@ components:
         sourceBlacklist: []
         sourceWhitelist: []
         userAddr: '0x47E2D28169738039755586743E2dfCF3bd643f86'
-    Simulation:
-      properties:
-        isSuccess:
-          type: boolean
-          title: Issuccess
-        amountsOut:
-          items:
-            type: integer
-          type: array
-          title: Amountsout
-        gasEstimate:
-          type: integer
-          title: Gasestimate
-        simulationError:
-          anyOf:
-          - $ref: '#/components/schemas/SimulationError'
-          - type: 'null'
-      type: object
-      required:
-      - isSuccess
-      - amountsOut
-      - gasEstimate
-      - simulationError
-      title: Simulation
-      description: "Simulation data schema\n\nAttributes:\n    is_success (bool): true if no errors were detected during simulation\n    amountsOut (List[int]): list of amounts out from simulation\n    gasEstimate (int): on-chain estimateGas raw response value\n    simulationError (Optional[SimulationError]): simulation error data (if error)"
     AssemblePathRequest:
       properties:
         userAddr:
@@ -1107,7 +1115,45 @@ components:
       - pathId: 95bb963d193cd229a0b4087f34382ea2
         simulate: false
         userAddr: '0x47E2D28169738039755586743E2dfCF3bd643f86'
-    PathRequestV3:
+    Transaction:
+      properties:
+        gas:
+          type: integer
+          title: Gas
+        gasPrice:
+          type: integer
+          title: Gasprice
+        value:
+          type: string
+          title: Value
+        to:
+          type: string
+          title: To
+        from:
+          type: string
+          title: From
+        data:
+          type: string
+          title: Data
+        nonce:
+          type: integer
+          title: Nonce
+        chainId:
+          type: integer
+          title: Chainid
+      type: object
+      required:
+      - gas
+      - gasPrice
+      - value
+      - to
+      - from
+      - data
+      - nonce
+      - chainId
+      title: Transaction
+      description: "Assembled Transaction Schema\n\nAttributes:\n    gas (int): txn gas amount\n    gasPrice (int): txn gas price in gwei\n    value (str): value of the transaction\n    to (str): txn to address\n    from_ (str): txn from address\n    data (str): txn bytecode to execute\n    nonce (int): current user nonce\n    chainId (int): id of the chain transaction was assembled for"
+    PathResponse:
       properties:
         deprecated:
           anyOf:
@@ -1119,194 +1165,148 @@ components:
           - type: string
           - type: 'null'
           title: Traceid
-        chainId:
+        blockNumber:
           type: integer
-          title: Chainid
-          description: Chain ID to request path for
-          examples:
-          - 1
+          title: Blocknumber
+        gasEstimate:
+          type: integer
+          title: Gasestimate
+        gasEstimateValue:
+          type: number
+          title: Gasestimatevalue
         inputTokens:
           items:
             $ref: '#/components/schemas/TokenAmount'
           type: array
-          maxItems: 10
-          minItems: 1
           title: Inputtokens
-          description: Input tokens and amounts for quote
-          examples:
-          - - amount: '189000000'
-              tokenAddress: '0x2260FAC5E5542a773Aa44fBCfeDf7C193bc2C599'
         outputTokens:
           items:
-            $ref: '#/components/schemas/TokenProportion'
+            $ref: '#/components/schemas/TokenAmount'
           type: array
-          maxItems: 10
-          minItems: 1
           title: Outputtokens
-          description: Output tokens and proportions for quote
-          examples:
-          - - proportion: 1.0
-              tokenAddress: '0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2'
-        gasPrice:
+        netOutValue:
+          type: number
+          title: Netoutvalue
+        outValues:
+          items:
+            type: string
+          type: array
+          title: Outvalues
+        transaction:
           anyOf:
-          - type: number
-            exclusiveMinimum: 0.0
+          - $ref: '#/components/schemas/Transaction'
           - type: 'null'
-          title: Gasprice
-          description: Gas Price
+        simulation:
+          anyOf:
+          - $ref: '#/components/schemas/Simulation'
+          - type: 'null'
+      type: object
+      required:
+      - blockNumber
+      - gasEstimate
+      - gasEstimateValue
+      - inputTokens
+      - outputTokens
+      - netOutValue
+      - outValues
+      - transaction
+      - simulation
+      title: PathResponse
+      description: "Assembled Path Transaction Response including quote, transaction, and simulation data\n\nAttributes:\n    blockNumber (int): block number of transaction quote\n    gasEstimate (int): gas estimate for transaction quote\n    gasEstimateValue (float): gas estimate value for transaction quote in gwei\n    inputTokens (List[TokenAmount]): list of input token amounts and input values\n    outputTokens (List[TokenAmount]): list of output token amounts and output values\n    netOutValue (float): new out value of transaction from quote\n    outValues (List[str]) out values from transaction quote\n    transaction (Optional[Transaction]): assembled transaction data for quote\n    simulation (Optional[Simulation]): simulation output data if enabled\n    pathVizImage (Optional[str]): path viz image if requested"
+    TokenAmount:
+      properties:
+        tokenAddress:
+          type: string
+          pattern: ^0x([a-fA-F0-9]){40}$
+          title: Tokenaddress
+          description: Token contract address
+        amount:
+          type: string
+          pattern: ^\d{1,64}$
+          title: Amount
+          description: Amount of token to swap
+      type: object
+      required:
+      - tokenAddress
+      - amount
+      title: TokenAmount
+      description: Quote token input amount schema
+    PathVizImageConfig:
+      properties:
+        linkColors:
+          anyOf:
+          - items:
+              type: string
+              pattern: ^#(?:[A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$
+            type: array
+          - type: 'null'
+          title: Linkcolors
           examples:
-          - 20
-        userAddr:
+          - null
+        nodeColor:
           anyOf:
           - type: string
-            pattern: ^0x([a-fA-F0-9]){40}$
+            pattern: ^#(?:[A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$
           - type: 'null'
-          title: Useraddr
-          description: Address of wallet to use to generate transaction
-          default: '0x47E2D28169738039755586743E2dfCF3bd643f86'
+          title: Nodecolor
           examples:
-          - '0x47E2D28169738039755586743E2dfCF3bd643f86'
-        slippageLimitPercent:
+          - null
+        nodeTextColor:
           anyOf:
-          - type: number
-            exclusiveMinimum: 0.0
+          - type: string
+            pattern: ^#(?:[A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$
           - type: 'null'
-          title: Slippagelimitpercent
-          description: Slippage to use for checking the path is valid
-          default: 0.3
+          title: Nodetextcolor
           examples:
-          - 0.3
-        sourceBlacklist:
+          - null
+        legendTextColor:
           anyOf:
-          - items:
-              type: string
-            type: array
+          - type: string
+            pattern: ^#(?:[A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$
           - type: 'null'
-          title: Sourceblacklist
-          description: List of liquidity providers that are not to be used for the swap path.
+          title: Legendtextcolor
           examples:
-          - []
-        sourceWhitelist:
-          anyOf:
-          - items:
-              type: string
-            type: array
-          - type: 'null'
-          title: Sourcewhitelist
-          description: List of liquidity providers to exclusively use for the swap path.
-          examples:
-          - []
-        poolBlacklist:
-          anyOf:
-          - items:
-              type: string
-            type: array
-          - type: 'null'
-          title: Poolblacklist
-          description: List of pool addresses to exclude from swap path consideration
-          examples:
-          - []
-        pathViz:
-          anyOf:
-          - type: boolean
-          - type: 'null'
-          title: Pathviz
-          default: false
-          examples:
-          - false
-        pathVizImage:
-          anyOf:
-          - type: boolean
-          - type: 'null'
-          title: Pathvizimage
-          default: false
-        pathVizImageConfig:
-          anyOf:
-          - $ref: '#/components/schemas/PathVizImageConfig'
-          - type: 'null'
-        disableRFQs:
-          anyOf:
-          - type: boolean
-          - type: 'null'
-          title: Disablerfqs
-          description: Flag to disable all off-chain RFQs from order routing
-          default: true
-          examples:
-          - true
-        referralCode:
+          - null
+        width:
           anyOf:
           - type: integer
           - type: 'null'
-          title: Referralcode
+          title: Width
           examples:
-          - 0
-        referralFee:
+          - null
+        height:
           anyOf:
-          - type: number
+          - type: integer
           - type: 'null'
-          title: Referralfee
+          title: Height
           examples:
-          - 0
-        referralFeeRecipient:
+          - null
+      additionalProperties: true
+      type: object
+      title: PathVizImageConfig
+      description: Schema for path viz image config
+    Simulation:
+      properties:
+        isSuccess:
+          type: boolean
+          title: Issuccess
+        amountsOut:
+          items:
+            type: integer
+          type: array
+          title: Amountsout
+        gasEstimate:
+          type: integer
+          title: Gasestimate
+        simulationError:
           anyOf:
-          - type: string
-            pattern: ^0x([a-fA-F0-9]){40}$
+          - $ref: '#/components/schemas/SimulationError'
           - type: 'null'
-          title: Referralfeerecipient
-          description: Address of wallet to receive referral fee
-          examples:
-          - '0x47E2D28169738039755586743E2dfCF3bd643f86'
-        compact:
-          anyOf:
-          - type: boolean
-          - type: 'null'
-          title: Compact
-          default: true
-          examples:
-          - true
-        likeAsset:
-          anyOf:
-          - type: boolean
-          - type: 'null'
-          title: Likeasset
-          default: false
-          examples:
-          - false
-        simple:
-          anyOf:
-          - type: boolean
-          - type: 'null'
-          title: Simple
-          default: false
-          examples:
-          - false
-        permit2:
-          anyOf:
-          - type: boolean
-          - type: 'null'
-          title: Permit2
-          default: false
-          examples:
-          - false
       type: object
       required:
-      - chainId
-      - inputTokens
-      - outputTokens
-      title: PathRequestV3
-      description: Public facing path request v3 schema
-      examples:
-      - chainId: 1
-        compact: true
-        gasPrice: 20
-        inputTokens:
-        - amount: '189000000'
-          tokenAddress: '0x2260FAC5E5542a773Aa44fBCfeDf7C193bc2C599'
-        outputTokens:
-        - proportion: 1
-          tokenAddress: '0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2'
-        referralCode: 0
-        slippageLimitPercent: 0.3
-        sourceBlacklist: []
-        sourceWhitelist: []
-        userAddr: '0x47E2D28169738039755586743E2dfCF3bd643f86'
+      - isSuccess
+      - amountsOut
+      - gasEstimate
+      - simulationError
+      title: Simulation
+      description: "Simulation data schema\n\nAttributes:\n    is_success (bool): true if no errors were detected during simulation\n    amountsOut (List[int]): list of amounts out from simulation\n    gasEstimate (int): on-chain estimateGas raw response value\n    simulationError (Optional[SimulationError]): simulation error data (if error)"
