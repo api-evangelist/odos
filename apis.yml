@@ -37,7 +37,7 @@ image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/odos.png
 url: https://raw.githubusercontent.com/api-evangelist/odos/refs/heads/main/apis.yml
 version: '0.19'
 created: '2026-06-14'
-modified: '2026-06-14'
+modified: '2026-10-06'
 specificationVersion: '0.23'
 tags:
   - DEX
@@ -169,6 +169,8 @@ apis:
   - type: FinOps
     url: https://raw.githubusercontent.com/api-evangelist/odos/refs/heads/main/finops/apis.yml
 common:
+  - url: https://odos.xyz/blog/
+    type: Blog
   - type: Website
     url: https://www.odos.xyz/
   - type: AgenticAccess
