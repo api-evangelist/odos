@@ -169,6 +169,10 @@ apis:
   - type: FinOps
     url: https://raw.githubusercontent.com/api-evangelist/odos/refs/heads/main/finops/apis.yml
 common:
+  - type: RateLimits
+    url: rate-limits/apis.yml
+  - type: FinOps
+    url: finops/apis.yml
   - url: https://odos.xyz/blog/
     type: Blog
   - type: Website
