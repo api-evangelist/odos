@@ -259,6 +259,35 @@ paths:
                 $ref: '#/components/schemas/HTTPValidationError'
 components:
   schemas:
+    OdosApiVersion:
+      type: string
+      enum:
+      - v3
+      - v2
+      title: OdosApiVersion
+      description: Odos API supported versions
+    RouterAddress:
+      properties:
+        deprecated:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Deprecated
+        traceId:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Traceid
+        address:
+          type: string
+          pattern: ^0x([a-fA-F0-9]){40}$
+          title: Address
+          description: Address of Odos Router
+      type: object
+      required:
+      - address
+      title: RouterAddress
+      description: Odos Router Address schema
     HTTPValidationError:
       properties:
         detail:
@@ -268,6 +297,48 @@ components:
           title: Detail
       type: object
       title: HTTPValidationError
+    SupportedChains:
+      properties:
+        deprecated:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Deprecated
+        traceId:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Traceid
+        chains:
+          items:
+            type: integer
+          type: array
+          title: Chains
+      type: object
+      required:
+      - chains
+      title: SupportedChains
+      description: Supported Chains schema
+    CurrentBlockNumber:
+      properties:
+        deprecated:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Deprecated
+        traceId:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Traceid
+        blockNumber:
+          type: integer
+          title: Blocknumber
+      type: object
+      required:
+      - blockNumber
+      title: CurrentBlockNumber
+      description: "Schema for current block number response\n\nAttributes:\n    blockNumber (int): current odos block number"
     ExecutorAddress:
       properties:
         deprecated:
@@ -312,6 +383,49 @@ components:
       - tokenMap
       title: TokenMap
       description: Token Map Schema
+    ValidationError:
+      properties:
+        loc:
+          items:
+            anyOf:
+            - type: string
+            - type: integer
+          type: array
+          title: Location
+        msg:
+          type: string
+          title: Message
+        type:
+          type: string
+          title: Error Type
+      type: object
+      required:
+      - loc
+      - msg
+      - type
+      title: ValidationError
+    LiquiditySources:
+      properties:
+        deprecated:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Deprecated
+        traceId:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Traceid
+        sources:
+          items:
+            type: string
+          type: array
+          title: Sources
+      type: object
+      required:
+      - sources
+      title: LiquiditySources
+      description: Odos liquidity sources schema
     Token:
       properties:
         name:
@@ -348,120 +462,6 @@ components:
       - isRebasing
       title: Token
       description: Token Schema
-    LiquiditySources:
-      properties:
-        deprecated:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Deprecated
-        traceId:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Traceid
-        sources:
-          items:
-            type: string
-          type: array
-          title: Sources
-      type: object
-      required:
-      - sources
-      title: LiquiditySources
-      description: Odos liquidity sources schema
-    ValidationError:
-      properties:
-        loc:
-          items:
-            anyOf:
-            - type: string
-            - type: integer
-          type: array
-          title: Location
-        msg:
-          type: string
-          title: Message
-        type:
-          type: string
-          title: Error Type
-      type: object
-      required:
-      - loc
-      - msg
-      - type
-      title: ValidationError
-    SupportedChains:
-      properties:
-        deprecated:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Deprecated
-        traceId:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Traceid
-        chains:
-          items:
-            type: integer
-          type: array
-          title: Chains
-      type: object
-      required:
-      - chains
-      title: SupportedChains
-      description: Supported Chains schema
-    RouterAddress:
-      properties:
-        deprecated:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Deprecated
-        traceId:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Traceid
-        address:
-          type: string
-          pattern: ^0x([a-fA-F0-9]){40}$
-          title: Address
-          description: Address of Odos Router
-      type: object
-      required:
-      - address
-      title: RouterAddress
-      description: Odos Router Address schema
-    OdosApiVersion:
-      type: string
-      enum:
-      - v3
-      - v2
-      title: OdosApiVersion
-      description: Odos API supported versions
-    CurrentBlockNumber:
-      properties:
-        deprecated:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Deprecated
-        traceId:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Traceid
-        blockNumber:
-          type: integer
-          title: Blocknumber
-      type: object
-      required:
-      - blockNumber
-      title: CurrentBlockNumber
-      description: "Schema for current block number response\n\nAttributes:\n    blockNumber (int): current odos block number"
     ContractInfo:
       properties:
         deprecated:
