@@ -1,4 +1,4 @@
-# Odos (odos)
+# Odos
 
 <!-- API-EVANGELIST-PROVENANCE:BEGIN -->
 > ### About this repository
@@ -66,113 +66,144 @@
 
 Odos is a DEX aggregator and smart order routing platform that uses a sophisticated optimization algorithm to unify fragmented liquidity and maximize the output of every trade. The platform scans 1050+ liquidity pools across 15 EVM-compatible chains to find optimal swap routes while accounting for gas costs. Since launching in 2022, Odos has facilitated over $100B in transaction volume and served 3.2M+ unique wallets. Odos provides REST APIs for token swap quotes, optimal routing, slippage management, multi-token transaction execution, token pricing, and liquidity zap operations.
 
-**APIs.json:** [https://raw.githubusercontent.com/api-evangelist/odos/refs/heads/main/apis.yml](https://raw.githubusercontent.com/api-evangelist/odos/refs/heads/main/apis.yml)
+**Areas:** Decentralized Exchange · Aggregator · DeFi · Token Swaps · Liquidity · Routing · Blockchain · EVM · Web3
 
-## Tags
+## Odos on APIs.io
 
-- DEX
-- Aggregator
-- DeFi
-- Token Swaps
-- Liquidity
-- Routing
-- Blockchain
-- EVM
-- Web3
+Everything profiled for Odos is published on APIs.io rather than in this repository. Start at the provider page — **[apis.io/providers/odos/](https://apis.io/providers/odos/)** — or go straight to one of the APIs or properties below.
 
-## Timestamps
+### APIs (5)
 
-- **Created:** 2026-06-14
-- **Modified:** 2026-06-14
+- [Odos Token Pricing API](https://apis.io/apis/odos/odos-token-pricing-api/) — The Odos Token Pricing API provides real-time price data for 100,000+ DeFi assets across 15 supported blockchain networks. The pricing data is DeFi-native…
+- [Odos Liquidity Zaps API](https://apis.io/apis/odos/odos-liquidity-zaps-api/) — The Odos Liquidity Zaps API enables streamlined single-transaction liquidity provisioning with optimized routing. Users can provide liquidity to DeFi…
+- [Odos Information API](https://apis.io/apis/odos/odos-information-api/) — General information about the Odos service offerings
+- [Odos Pricing API](https://apis.io/apis/odos/odos-pricing-api/) — Query Odos' price for any token with liquidity
+- [Odos Smart Order Routing API](https://apis.io/apis/odos/odos-smart-order-routing-api/) — Swap tokens
 
-## APIs
+### Published properties
 
-### Odos Smart Order Router API
+Each property below is a page on APIs.io carrying the machine-readable artifact and what it says.
 
-The Odos Smart Order Router (SOR) API provides REST endpoints for obtaining optimal token swap quotes, assembling swap transaction data, and executing multi-token swaps across 15 EVM-compatible blockchains. The API aggregates liquidity from DEXs, AMMs, on-chain order books, lending protocols, and private RFQ systems to maximize trade output net of gas costs. Supports simple swaps, advanced market orders, limit orders, and cross-chain swaps. SOC 2 Type II compliant.
+#### Agentic access (1)
 
-- **Human URL:** [https://docs.odos.xyz/](https://docs.odos.xyz/)
-- **Base URL:** `https://api.odos.xyz`
+Which operations an agent can call, which act, and which need a human in the loop.
 
-#### Tags
+- [Odos Agentic Access](https://apis.io/agentic-access/odos/odos-agentic-access/)
 
-- DEX Aggregator
-- Token Swaps
-- Liquidity Routing
-- Quote
-- Assemble
-- Execute
+#### JSON Schema (1)
 
-#### Properties
+The data models the API reads and writes.
 
+- [Odos API Schemas](https://apis.io/schemas/odos/schemas/)
+
+#### JSON-LD (1)
+
+Linked-data contexts for the provider's vocabulary.
+
+- [context Context](https://apis.io/jsonld/odos/context/)
+
+#### Examples (1)
+
+Example requests and responses.
+
+- [Examples](https://apis.io/examples/odos/examples/)
+
+#### Collections (3)
+
+Postman and Open Collection request collections.
+
+- [Odos Information API](https://apis.io/collections/odos/open-odos-information-api/)
+- [Odos Information Pricing API](https://apis.io/collections/odos/open-odos-pricing-api/)
+- [Odos Information Smart Order Routing API](https://apis.io/collections/odos/open-odos-smart-order-routing-api/)
+
+#### Governance rules (1)
+
+Spectral rulesets for the provider's contracts.
+
+- [Odos — jsonschema rules](https://apis.io/rules/odos/odos-jsonschema-spectral-rules/)
+
+#### Security (1)
+
+Authentication, trust centre, and vulnerability disclosure.
+
+- [Odos Domain Security](https://apis.io/security/odos/odos-domain-security/)
+
+#### Plans and pricing (1)
+
+Published plans, tiers and prices.
+
+- [Apis](https://apis.io/plans/odos/apis/)
+
+#### Rate limits (1)
+
+Published request limits.
+
+- [Apis](https://apis.io/rate-limits/odos/apis/)
+
+#### FinOps (1)
+
+What the API costs to run, by operation.
+
+- [Apis](https://apis.io/finops/odos/apis/)
+
+## Where to find this API
+
+Links to the company's own pages. This repository publishes no copy of their specifications — the canonical document is theirs and lives at the URLs below.
+
+- [Website](https://www.odos.xyz/)
 - [Documentation](https://docs.odos.xyz/)
-- [OpenAPI](https://api.odos.xyz/sor/openapi.json) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [Plans](https://raw.githubusercontent.com/api-evangelist/odos/refs/heads/main/plans/apis.yml)
-- [Rate Limits](https://raw.githubusercontent.com/api-evangelist/odos/refs/heads/main/rate-limits/apis.yml)
-- [Fin Ops](https://raw.githubusercontent.com/api-evangelist/odos/refs/heads/main/finops/apis.yml)
+- [Blog](https://odos.xyz/blog/)
+- [Terms of service](https://docs.odos.xyz/resources/terms-of-service)
 
-### Odos Token Pricing API
+## API Evangelist rating
 
-The Odos Token Pricing API provides real-time price data for 100,000+ DeFi assets across 15 supported blockchain networks. The pricing data is DeFi-native and sourced directly from on-chain liquidity, delivering accurate pricing for tokens listed on decentralized exchanges. Available as a standalone service through the QuickNode marketplace or as part of the core Odos API offering.
+**Kin Score 27.0** — thin · rubric 0.24.0 · scored 2026-10-17
 
-- **Human URL:** [https://docs.odos.xyz/](https://docs.odos.xyz/)
-- **Base URL:** `https://api.odos.xyz`
+| Facet | Score |
+|---|---|
+| Discoverability | 66.1 |
+| Contract quality | 47.1 |
+| Contract governance | 9.8 |
+| Operational transparency | 5.3 |
+| Developer ergonomics | 26.2 |
+| Access clarity | 13.2 |
 
-#### Tags
+**Agent readiness 23.0** — agent-aware
 
-- Token Pricing
-- DeFi
-- On-chain Data
-- Price Feeds
+| Agent-readiness dimension | Result |
+|---|---|
+| Spec Presence | yes |
+| Agentic Access | derived (partial credit) |
+| Reversibility Documented | — |
+| MCP Server | — |
+| Auth Clarity | — |
+| Idempotency | — |
+| Error Semantics | verified |
+| OpenAPI Examples | — |
+| Rate Limit Signal | documented (partial credit) |
+| Event Surface Described | — |
+| Agent Skills | — |
+| Well Known Catalog | — |
+| Consent Identity | — |
+| Agent Card | — |
+| Dry Run Mode | — |
+| Delegated Identity | — |
+| Protected Resource Metadata | — |
+| Dynamic Client Registration | — |
+| Agentic Commerce | — |
 
-#### Properties
+**Regulatory alignment 17.6** — Securities & Market Data
 
-- [Documentation](https://docs.odos.xyz/)
-- [Plans](https://raw.githubusercontent.com/api-evangelist/odos/refs/heads/main/plans/apis.yml)
-- [Rate Limits](https://raw.githubusercontent.com/api-evangelist/odos/refs/heads/main/rate-limits/apis.yml)
-- [Fin Ops](https://raw.githubusercontent.com/api-evangelist/odos/refs/heads/main/finops/apis.yml)
+The rubric is published at [github.com/api-evangelist/kin-score](https://github.com/api-evangelist/kin-score). The per-check breakdown behind these numbers — which checks were earned, partial or missed — along with score history and how this provider compares to its peers, is available at [apis.io/providers/odos/](https://apis.io/providers/odos/).
 
-### Odos Liquidity Zaps API
+## How this profile is made
 
-The Odos Liquidity Zaps API enables streamlined single-transaction liquidity provisioning with optimized routing. Users can provide liquidity to DeFi protocols using any token combination in a single transaction, with Odos handling all intermediate swaps and routing automatically to minimize costs and slippage.
+API Evangelist profiles a company's public API surface the way a developer would find it: the website, developer portal and documentation, the specifications it publishes, its public repositories, and its pricing, status and changelog pages. From that it derives the properties above — contracts split per API, workflows, schemas, collections, governance rules, plans and rate limits — and scores them against the published [Kin Score rubric](https://github.com/api-evangelist/kin-score).
 
-- **Human URL:** [https://docs.odos.xyz/](https://docs.odos.xyz/)
-- **Base URL:** `https://api.odos.xyz`
+The artifacts are published on [APIs.io](https://apis.io), not in this repository. This repository is the public record for Odos: the place to say something is wrong, missing or out of date, and to ask for a re-score or a removal.
 
-#### Tags
+## Open an issue
 
-- Liquidity
-- Zaps
-- DeFi
-- AMM
-- Liquidity Provision
-
-#### Properties
-
-- [Documentation](https://docs.odos.xyz/)
-- [Plans](https://raw.githubusercontent.com/api-evangelist/odos/refs/heads/main/plans/apis.yml)
-- [Rate Limits](https://raw.githubusercontent.com/api-evangelist/odos/refs/heads/main/rate-limits/apis.yml)
-- [Fin Ops](https://raw.githubusercontent.com/api-evangelist/odos/refs/heads/main/finops/apis.yml)
-
-## Common Properties
-
-- [Portal](https://enterprise.odos.xyz)
-- [Documentation](https://docs.odos.xyz/)
-- [About](https://docs.odos.xyz/home/about)
-- [F A Q](https://docs.odos.xyz/resources/faq)
-- [Plans](https://docs.odos.xyz/build/api_pricing)
-- [Status](https://status.odos.xyz)
-- [Git Hub](https://github.com/odos-xyz)
-- [Discord](https://discord.gg/odos)
-- [Twitter](https://x.com/odosprotocol)
-- [Telegram](https://t.me/OdosProtocol)
-- [Forum](https://forum.odos.xyz)
-- [App](https://app.odos.xyz)
-- [M C P](https://github.com/odos-xyz/odos-mcp)
-- [Terms of Service](https://docs.odos.xyz/resources/terms-of-service)
-
-## Maintainers
-
-**FN:** API Evangelist
-**Email:** info@apievangelist.com
-**URL:** https://apievangelist.com
+- **Something about this listing** — a wrong description, a missing API, a stale artifact or a question about the rating: [open an issue on this repository](https://github.com/api-evangelist/odos/issues/new).
+- **A new API, or one that is not in the catalog yet** — [submit it on APIs.io](https://apis.io/add/).
+- **Anything else** — [the APIs.io inbox](https://github.com/api-search/inbox/issues/new) or [info@apievangelist.com](mailto:info@apievangelist.com).
